@@ -44,6 +44,16 @@ table {
     border-collapse: collapse;
     border-spacing: 0;
 }
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    height: 100%;
+    padding: 10px 20px 50px;
+}
 `;
 
 export default GlobalStyle;
