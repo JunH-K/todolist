@@ -11,7 +11,8 @@ const App = () => {
       <GlobalStyle />
       <Router>
         <Switch>
-          <Route exact path="/:page" component={TodoContainer} />
+          <Route path="/:page" component={TodoContainer} />
+          <Route component={TodoContainer} />
         </Switch>
       </Router>
     </Provider>
