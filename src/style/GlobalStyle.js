@@ -54,6 +54,14 @@ body {
     height: 100%;
     padding: 10px 20px 50px;
 }
+
+  @media (max-width: 768px) {
+    body{
+    width:100vw;
+    padding: 0;
+    }
+  }
+
 `;
 
 export default GlobalStyle;

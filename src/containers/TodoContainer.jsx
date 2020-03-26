@@ -2,74 +2,19 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { TODO_LIST_REQUEST } from '../reducers/todos';
-import { Alert } from '../components';
+import { Alert, Header, Button, InputText } from '../components';
 
 const Wrapper = styled.div`
   position: relative;
   width: 50vw;
-  min-width: 480px;
-  max-width: 768px;
+  // min-width: 480px;
+  // max-width: 768px;
   margin: 0 auto;
   border: 1px solid #a1a1a1;
-`;
 
-const MoreAction = styled.div`
-  width: 150px;
-  position: absolute;
-  padding: 5px;
-  top: 40px;
-  right: -87px;
-  border-radius: 1px;
-  border: 1px solid #6e6e6e;
-  background: #f4f4f4;
-  z-index: 1;
-
-  .menu {
-    height: 20px;
-    padding-left: 5px;
-    line-height: 20px;
-    margin-top: 5px;
-    cursor: pointer;
+  @media (max-width: 768px) {
+    width: 100vw;
   }
-
-  .menu:hover {
-    background: #c5c5c5;
-  }
-`;
-
-const Header = styled.div`
-  position: relative;
-  height: 50px;
-  background: #0078d7;
-
-  .search {
-    position: absolute;
-    width:77%
-    top: 50%;
-    left: 10px;
-    transform: translateY(-50%);
-    border-radius:2px;
-  }
-
-  .more-action {
-    float: right;
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    width: 20%;
-    transform: translateY(-50%);
-  }
-`;
-
-const Button = styled.button`
-  background-color: #7c7c7c;
-  border: none;
-  color: white;
-  text-align: center;
-  text-decoration: none;
-  cursor: pointer;
-  border-radius: 2px;
-  height: 30px;
 `;
 
 const CheckBox = styled.input.attrs({
@@ -81,14 +26,6 @@ const CheckBox = styled.input.attrs({
   -webkit-transform: scale(1.5); /* Safari and Chrome */
   -o-transform: scale(1.5); /* Opera */
   transform: scale(1.5);
-`;
-
-const InputText = styled.input`
-  padding: 5px 5px;
-  display: inline-block;
-  width: 80%;
-  height: 30px;
-  border: 1px solid #ccc;
 `;
 
 const Write = styled.div`
@@ -194,34 +131,12 @@ const TodoContainer = ({
   return (
     <>
       <Wrapper>
-        <Header>
-          <InputText
-            type="text"
-            className="search"
-            placeholder="검색 ex) 내용 , 날짜:20200101"
-          />
-          <Button type="button" className="more-action">
-            더보기
-          </Button>
-          <MoreAction className="more-action-menu">
-            <div className="menu">생성일 정렬</div>
-            <div className="menu">수정일 정렬</div>
-            <hr />
-            <div className="menu">완료목록보기</div>
-            <div className="menu">완료목록숨기기</div>
-            <hr />
-            <div className="menu">백업</div>
-            <div className="menu">복원</div>
-          </MoreAction>
-        </Header>
-
         <div className="content">
+          <Header />
           <Write>
             <div className="write-todo">
               <InputText type="text" placeholder="할일입력.." />
-              <Button type="button" className="add">
-                할일추가
-              </Button>
+              <Button type="button" className="add" name={'할일추가'} />
             </div>
             <div className="write-ref">
               <InputText
