@@ -18,7 +18,7 @@ const Alert = styled.div`
   &.show {
     display: block;
     opacity: 1;
-    animation: showAni 0.5s, hideAni 0.5s 3s;
+    animation: showAni 1s, hideAni 1s ${({ delayTime }) => delayTime}s;
   }
 
   @keyframes showAni {
@@ -31,10 +31,13 @@ const Alert = styled.div`
   }
 
   @keyframes hideAni {
-    from {
+    0% {
       opacity: 1;
     }
-    to {
+    50% {
+      opacity: 0;
+    }
+    100% {
       opacity: 0;
     }
   }
