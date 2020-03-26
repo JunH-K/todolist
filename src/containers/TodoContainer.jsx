@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { TODO_LIST_REQUEST } from '../reducers/todos';
+import { Alert } from '../components';
 
 const Wrapper = styled.div`
   position: relative;
@@ -154,46 +155,6 @@ const Todo = styled.div`
   }
 `;
 
-const Alert = styled.div`
-  line-height: 20px;
-  display: none;
-  position: absolute;
-  left: 50%;
-  top: 20%;
-  padding: 15px;
-  width: 300px;
-  max-height: 250px;
-  transform: translate(-50%, -50%);
-  background: #3d3d3d;
-  color: white;
-  opacity: 1;
-  border-radius: 10px;
-
-  &.show {
-    display: block;
-    opacity: 1;
-    animation: showAni 0.5s, hideAni 0.5s 3s;
-  }
-
-  @keyframes showAni {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-
-  @keyframes hideAni {
-    from {
-      opacity: 1;
-    }
-    to {
-      opacity: 0;
-    }
-  }
-`;
-
 const Pagination = styled.div`
   display: flex;
   justify-content: center;
@@ -326,11 +287,7 @@ const TodoContainer = ({
         </a>
       </Pagination>
 
-      <Alert className="alert show">
-        알림창~~알림창~~알림창~~알림창~~알림창~~알림창~~알림~
-        알림창~~알림창~~알림창~~알림창~~알림창~~알림창~~알림~
-        알림창~~알림창~~알림창~~알림창~~알림창~~알림창~~알림~
-      </Alert>
+      <Alert />
     </>
   );
 };
