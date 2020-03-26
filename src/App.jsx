@@ -1,17 +1,20 @@
 import React from 'react';
 import { Provider } from 'react-redux';
+import { HashRouter as Router, Route, Switch } from 'react-router-dom';
 import store from 'store/store';
-import MainContainer from 'containers/MainContainer';
+import TodoContainer from 'containers/TodoContainer';
 import GlobalStyle from './style/GlobalStyle';
 
 const App = () => {
   return (
-    <div>
+    <Provider store={store}>
       <GlobalStyle />
-      <Provider store={store}>
-        <MainContainer />
-      </Provider>
-    </div>
+      <Router>
+        <Switch>
+          <Route exact path="/:page" component={TodoContainer} />
+        </Switch>
+      </Router>
+    </Provider>
   );
 };
 
