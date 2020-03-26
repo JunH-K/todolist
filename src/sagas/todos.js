@@ -6,15 +6,14 @@ import {
   TODO_LIST_ERROR,
 } from '../reducers/todos';
 
-function todoListAPI() {
-  return axios.get(`/todos`);
+function todoListAPI(page) {
+  return axios.get(`/todos?_page=${page}`);
 }
 
 function* todoList(action) {
   try {
-    const result = yield call(todoListAPI, action.data);
-
-    yield delay(1000);
+    const result = yield call(todoListAPI, action.data.page);
+    debugger;
     yield put({
       type: TODO_LIST_SUCCESS,
       data: result.data,
