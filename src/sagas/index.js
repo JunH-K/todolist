@@ -1,6 +1,8 @@
 import { all, call } from 'redux-saga/effects';
-import counter from './counter';
+import todos from './todos';
+import axios from 'axios';
 
+axios.defaults.baseURL = 'http://localhost:3000';
 export default function* rootSaga() {
-  yield all([call(counter)]);
+  yield all([call(todos)]);
 }
