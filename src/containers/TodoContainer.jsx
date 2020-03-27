@@ -11,9 +11,14 @@ const Wrapper = styled.div`
   // max-width: 768px;
   margin: 0 auto;
   border: 1px solid #a1a1a1;
+  transition: all 0.5s;
 
   @media (max-width: 768px) {
     width: 100vw;
+    transition: all 0.5s;
+    border-left: none;
+    border-right: none;
+    border-top: none;
   }
 `;
 
@@ -42,7 +47,7 @@ const Write = styled.div`
   }
 
   input:focus {
-    border-bottom: 1px solid #0078d7;
+    border-bottom: 2px solid #0078d7;
   }
 
   .write-todo {
@@ -146,23 +151,26 @@ const TodoContainer = ({
             </div>
           </Write>
 
-          <Todo>
-            <CheckBox type="checkbox" id="1" name="vehicle1" checked />
-            <span data-id="1">1</span>
-            <span className="complete" title="클릭하여 수정 or 삭제">
-              {' '}
-              할일~
-            </span>
-            <div className="ref-id">
-              <p>@1@5</p>
-            </div>
-            <div className="date">
-              <span>생성 : 2020.1.1</span>
-              <span>수정 : 2020.1.1</span>
-            </div>
-          </Todo>
+          {todoList.map(todo => {
+            return (
+              <Todo>
+                <CheckBox type="checkbox" id="1" name="vehicle1" />
+                <span data-id="1">1</span>
+                <span className="complete" title="클릭하여 수정 or 삭제">
+                  {todo.content}
+                </span>
+                <div className="ref-id">
+                  <p>@1@5</p>
+                </div>
+                <div className="date">
+                  <span>생성 : {todo.createdAt}</span>
+                  <span>수정 : {todo.updateAt}</span>
+                </div>
+              </Todo>
+            );
+          })}
 
-          <Write className="write">
+          {/* <Write className="write">
             <div className="write-todo">
               <InputText type="text" placeholder="할일입력.." />
               <Button type="button" className="add">
@@ -181,7 +189,7 @@ const TodoContainer = ({
                 삭제
               </Button>
             </div>
-          </Write>
+          </Write> */}
         </div>
       </Wrapper>
 
