@@ -13,7 +13,7 @@ function todoListAPI(page) {
 function* todoList(action) {
   try {
     const result = yield call(todoListAPI, action.data.page);
-    debugger;
+
     yield put({
       type: TODO_LIST_SUCCESS,
       data: result.data,
