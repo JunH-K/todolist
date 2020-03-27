@@ -6,7 +6,7 @@ const Write = styled.div`
   border: 1px solid #a1a1a1;
 
   input {
-    width: 79%;
+    width: 77%;
     outline: none;
     border-top: none;
     border-left: none;
@@ -23,7 +23,7 @@ const Write = styled.div`
   }
 
   .write-todo .add {
-    width: 20%;
+    width: 23%;
   }
 
   .write-ref {
@@ -32,12 +32,12 @@ const Write = styled.div`
   }
 
   .cancel {
-    width: 9%;
-    margin-right: 2%;
+    width: 11%;
+    margin-right: 1%;
   }
 
   .delete {
-    width: 9%;
+    width: 11%;
   }
 `;
 
