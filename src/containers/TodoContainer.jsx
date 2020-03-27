@@ -97,7 +97,7 @@ const TodoContainer = ({
       <Wrapper>
         <div className="content">
           <Header />
-          <Write />
+          <Write completeText={'할일 추가'} />
 
           {todoList.map(todo => {
             return (
