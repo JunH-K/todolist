@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { TODO_LIST_REQUEST } from '../reducers/todos';
-import { Alert, Header, Write } from '../components';
+import { Alert, Header, Write, TodoList } from '../components';
 
 const Wrapper = styled.div`
   position: relative;
@@ -19,40 +19,6 @@ const Wrapper = styled.div`
     border-left: none;
     border-right: none;
     border-top: none;
-  }
-`;
-
-const CheckBox = styled.input.attrs({
-  type: 'checkbox',
-  checked: true,
-})`
-  -ms-transform: scale(1.5); /* IE */
-  -moz-transform: scale(1.5); /* FF */
-  -webkit-transform: scale(1.5); /* Safari and Chrome */
-  -o-transform: scale(1.5); /* Opera */
-  transform: scale(1.5);
-`;
-
-const Todo = styled.div`
-  border-bottom: 1px solid #f0f0f0;
-  line-height: 30px;
-  padding-left: 10px;
-
-  .ref-id {
-    color: #7a7a7a;
-    font-size: 13px;
-  }
-
-  .complete {
-    text-decoration: line-through;
-    color: #b6b6b6;
-  }
-
-  .date {
-    left: 10px;
-    font-size: 11px;
-    padding-left: 20px;
-    color: #7a7a7a;
   }
 `;
 
@@ -97,26 +63,8 @@ const TodoContainer = ({
       <Wrapper>
         <div className="content">
           <Header />
-          <Write completeText={'할일 추가'} />
-
-          {todoList.map(todo => {
-            return (
-              <Todo>
-                <CheckBox type="checkbox" id="1" name="vehicle1" />
-                <span data-id="1">1</span>
-                <span className="complete" title="클릭하여 수정 or 삭제">
-                  {todo.content}
-                </span>
-                <div className="ref-id">
-                  <p>@1@5</p>
-                </div>
-                <div className="date">
-                  <span>생성 : {todo.createdAt}</span>
-                  <span>수정 : {todo.updateAt}</span>
-                </div>
-              </Todo>
-            );
-          })}
+          <Write completeText="할일 추가" />
+          <TodoList todoList={todoList} />
 
           {/* <Write className="write">
             <div className="write-todo">
