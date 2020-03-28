@@ -1,4 +1,4 @@
-const getDate = milliseconds => {
+const getMillisecondsToDate = milliseconds => {
   const date = new Date(milliseconds);
   const year = date.getFullYear();
   const month = date.getMonth() + 1;
@@ -18,4 +18,4 @@ const getDate = milliseconds => {
   return `${year}.${month}.${day} ${hours}:${minutes}:${seconds}`;
 };
 
-export { getDate };
+export { getMillisecondsToDate };

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { getMillisecondsToDate } from '../../util/util';
 
 const CheckBox = styled.input.attrs({
   type: 'checkbox',
@@ -41,6 +42,10 @@ const TodoStyle = styled.div`
     padding-left: 20px;
     color: #7a7a7a;
   }
+
+  .date .create-date {
+    margin-right: 5px;
+  }
 `;
 
 const TodoList = ({ todoList = [], onChangeChecked }) => {
@@ -68,8 +73,12 @@ const TodoList = ({ todoList = [], onChangeChecked }) => {
           <p>@1@5</p>
         </div>
         <div className="date">
-          <span>생성 : {todo.createdAt}</span>
-          <span>수정 : {todo.updateAt}</span>
+          <span className="create-date">
+            생성 : {getMillisecondsToDate(todo.createdAt)}
+          </span>
+          <span className="update-date">
+            수정 : {getMillisecondsToDate(todo.updateAt)}
+          </span>
         </div>
       </TodoStyle>
     );
