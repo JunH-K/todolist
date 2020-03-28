@@ -53,12 +53,14 @@ body {
     font-family: 'Noto Sans KR', sans-serif;
     height: 100%;
     padding: 10px 20px 50px;
+    transition: all .5s;
 }
 
   @media (max-width: 768px) {
     body{
     width:100vw;
     padding: 0;
+    transition: all .5s;
     }
   }
 
