@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { TODO_LIST_REQUEST } from '../reducers/todos';
-import { Alert, Header, Pagination } from '../components';
+import { Alert, Header, Pagination, Loading } from '../components';
 import Container from './Style';
 import WriteContainer from './WriteContainer';
 import TodoListContainer from './TodoListContainer';
@@ -12,12 +12,12 @@ const TodoContainer = ({
   },
 }) => {
   const dispatch = useDispatch();
-  const { todoList } = useSelector(state => state.todos);
+  const { todoList, isLoading } = useSelector(state => state.todos);
 
   useEffect(() => {
     dispatch({ type: TODO_LIST_REQUEST, data: { page } });
   }, [page]);
-
+  debugger;
   return (
     <>
       <Container>
@@ -27,6 +27,7 @@ const TodoContainer = ({
       </Container>
       <Pagination />
       <Alert />
+      <Loading isLoading={isLoading} />
     </>
   );
 };
