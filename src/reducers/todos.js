@@ -4,7 +4,7 @@ export const TODO_LIST_REQUEST = 'todo/TODO_LIST_REQUEST';
 export const TODO_LIST_SUCCESS = 'todo/TODO_LIST_SUCCESS';
 export const TODO_LIST_ERROR = 'todo/TODO_LIST';
 
-const defaultState = { todoList: [{ title: '제목' }] };
+const defaultState = { todoList: [] };
 
 const todos = handleActions(
   {
