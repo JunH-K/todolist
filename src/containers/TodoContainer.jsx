@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { TODO_LIST_REQUEST } from '../reducers/todos';
-import { Alert, Header, Write, TodoList, Pagination } from '../components';
+import { Alert, Header, Pagination } from '../components';
 import Container from './Style';
+import WriteContainer from './WriteContainer';
+import TodoListContainer from './TodoListContainer';
 
 const TodoContainer = ({
   match: {
@@ -20,8 +22,8 @@ const TodoContainer = ({
     <>
       <Container>
         <Header />
-        <Write completeText="할일 추가" />
-        <TodoList todoList={todoList} />
+        <WriteContainer />
+        <TodoListContainer todoList={todoList} />
       </Container>
       <Pagination />
       <Alert />

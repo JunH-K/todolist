@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { getMillisecondsToDate } from '../../util/util';
+import { getMillisecondsToDate } from '../util/util';
+import EditContainer from './EditContainer';
 
 const CheckBox = styled.input.attrs({
   type: 'checkbox',
@@ -48,12 +49,33 @@ const TodoStyle = styled.div`
   }
 `;
 
-const TodoList = ({ todoList = [], onChangeChecked }) => {
+const TodoListContainer = ({ todoList = [], onChangeChecked }) => {
+  const [editId, setEditId] = useState(-1);
+
   const onChange = id => () => {
     onChangeChecked === 'function' && onChangeChecked(id);
   };
 
-  return todoList.map(todo => {
+  const onClickEdit = id => () => {
+    setEditId(id);
+  };
+
+  const onClickCancel = () => {
+    setEditId(-1);
+  };
+
+  return todoList.map((todo, index) => {
+    if (todo.id === editId) {
+      return (
+        <EditContainer
+          todoValue={todo.content}
+          refValue={todo.refId}
+          key={todo.id + todo.createdAt}
+          onClickCancel={onClickCancel}
+        />
+      );
+    }
+
     return (
       <TodoStyle key={todo.id + todo.createdAt} done={todo.done}>
         <CheckBox
@@ -66,11 +88,15 @@ const TodoList = ({ todoList = [], onChangeChecked }) => {
         <span data-id="1" className="todo-id">
           {todo.id}
         </span>
-        <span className="content" title="클릭하여 수정 or 삭제">
+        <span
+          className="content"
+          title="클릭하여 수정 or 삭제"
+          onClick={onClickEdit(todo.id)}
+        >
           {todo.content}
         </span>
         <div className="ref-id">
-          <p>@1@5</p>
+          <p>{todo.refId}</p>
         </div>
         <div className="date">
           <span className="create-date">
@@ -85,4 +111,4 @@ const TodoList = ({ todoList = [], onChangeChecked }) => {
   });
 };
 
-export default TodoList;
+export default TodoListContainer;
