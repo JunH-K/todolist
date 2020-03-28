@@ -27,9 +27,12 @@ const TodoStyle = styled.div`
     font-size: 13px;
   }
 
-  .complete {
-    text-decoration: line-through;
-    color: #b6b6b6;
+  .content {
+    ${({ done }) => {
+      if (done) {
+        return 'text-decoration: line-through;color: #b6b6b6;';
+      }
+    }}
   }
 
   .date {
@@ -47,18 +50,18 @@ const TodoList = ({ todoList = [], onChangeChecked }) => {
 
   return todoList.map(todo => {
     return (
-      <TodoStyle key={todo.id + todo.createdAt}>
+      <TodoStyle key={todo.id + todo.createdAt} done={todo.done}>
         <CheckBox
           type="checkbox"
           id="1"
           name="vehicle1"
-          checked={!todo.done}
+          checked={todo.done}
           onChange={onChange(todo.id)}
         />
         <span data-id="1" className="todo-id">
           {todo.id}
         </span>
-        <span className="complete" title="클릭하여 수정 or 삭제">
+        <span className="content" title="클릭하여 수정 or 삭제">
           {todo.content}
         </span>
         <div className="ref-id">
