@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { TODO_LIST_REQUEST } from '../reducers/todos';
 import { Alert, Header, Write, TodoList, Pagination } from '../components';
 
-const Wrapper = styled.div`
+const Container = styled.div`
   position: relative;
   width: 50vw;
   margin: 0 auto;
@@ -34,21 +34,15 @@ const TodoContainer = ({
 
   return (
     <>
-      <Wrapper>
-        <Content>
-          <Header />
-          <Write completeText="할일 추가" />
-          <TodoList todoList={todoList} />
-        </Content>
-      </Wrapper>
+      <Container>
+        <Header />
+        <Write completeText="할일 추가" />
+        <TodoList todoList={todoList} />
+      </Container>
       <Pagination />
       <Alert />
     </>
   );
-};
-
-const Content = ({ children }) => {
-  return <div className="content">{children}</div>;
 };
 
 export default TodoContainer;
