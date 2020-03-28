@@ -9,7 +9,6 @@ const defaultState = { todoList: [{ title: '제목' }] };
 const todos = handleActions(
   {
     [TODO_LIST_SUCCESS]: (state, action) => {
-      debugger;
       return {
         todoList: action.data,
       };
