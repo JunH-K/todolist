@@ -10,7 +10,7 @@ const Style = styled.div`
   }}
   width: 100%;
   height: 100%;
-  background: #141926ba;
+  background: rgba(174, 174, 174, 0.33);
   position: absolute;
   top: 0;
   left: 0;
