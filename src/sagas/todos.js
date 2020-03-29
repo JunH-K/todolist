@@ -8,13 +8,15 @@ import {
   ADD_TODO_ERROR,
 } from '../reducers/todos';
 
-function todoListAPI(page) {
-  return axios.get(`/todos?_page=${page}`);
+function todoListAPI(data) {
+  const { page = 1, limit = 5, countPage = 3 } = data;
+  debugger;
+  return axios.get(`/todos?page=${page}&limit=${limit}&countPage=${countPage}`);
 }
 
 function* todoList(action) {
   try {
-    const result = yield call(todoListAPI, action.data.page);
+    const result = yield call(todoListAPI, action.data);
 
     yield put({
       type: TODO_LIST_SUCCESS,
