@@ -7,7 +7,11 @@ export const TODO_LIST_ERROR = 'todos/TODO_LIST_ERROR';
 export const ADD_TODO = 'todos/ADD_TODO';
 export const ADD_TODO_ERROR = 'todos/ADD_TODO_ERROR';
 
-const defaultState = { todoList: [], isLoading: false };
+const defaultState = {
+  todoList: [],
+  isLoading: false,
+  pageInfo: {},
+};
 
 const todos = handleActions(
   {
@@ -21,7 +25,8 @@ const todos = handleActions(
     [TODO_LIST_SUCCESS]: (state, action) => {
       return {
         ...state,
-        todoList: action.data,
+        todoList: action.data.row,
+        pageInfo: action.data.pageInfo,
         isLoading: false,
       };
     },
