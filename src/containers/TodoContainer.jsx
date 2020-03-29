@@ -6,18 +6,20 @@ import Container from './Style';
 import WriteContainer from './WriteContainer';
 import TodoListContainer from './TodoListContainer';
 
-const TodoContainer = ({
-  match: {
-    params: { page },
-  },
-}) => {
+const TodoContainer = props => {
+  const {
+    match: {
+      params: { page = 1 },
+    },
+  } = props;
+
   const dispatch = useDispatch();
-  const { todoList, isLoading } = useSelector(state => state.todos);
+  const { todoList, isLoading, pageInfo } = useSelector(state => state.todos);
 
   useEffect(() => {
     dispatch({ type: TODO_LIST_REQUEST, data: { page } });
   }, [page]);
-  debugger;
+
   return (
     <>
       <Container>
@@ -25,7 +27,7 @@ const TodoContainer = ({
         <WriteContainer />
         <TodoListContainer todoList={todoList} />
       </Container>
-      <Pagination />
+      <Pagination pageInfo={pageInfo} />
       <Alert />
       <Loading isLoading={isLoading} />
     </>
