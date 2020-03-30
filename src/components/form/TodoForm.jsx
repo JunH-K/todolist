@@ -1,8 +1,6 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import { TodoFormStyle } from './Style';
 import { Button, InputText } from '../index';
-import { useDispatch } from 'react-redux';
-import { ADD_TODO } from '../../reducers/todos';
 import { isRefIdValid } from '../../util/util';
 
 const TodoForm = ({
