@@ -1,7 +1,7 @@
 /**
  *
  * @param milliseconds 밀리초
- * @returns {string} YYYY.MM.DD hh:mm:ss
+ * @returns {string} YYYY.MM.DD hh.mm:ss
  */
 const getMillisecondsToDate = milliseconds => {
   const date = new Date(milliseconds);
@@ -24,7 +24,7 @@ const getMillisecondsToDate = milliseconds => {
 };
 
 const isRefIdValid = refIds => {
-  return /(@[0123456789-])/g.test(refIds);
+  return /(@[0-9]*)$/g.test(refIds);
 };
 
 export { getMillisecondsToDate, isRefIdValid };
