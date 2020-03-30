@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { getMillisecondsToDate } from '../util/util';
+import { attachPrefix, getMillisecondsToDate } from '../util/util';
 import EditContainer from './EditContainer';
 
 const CheckBox = styled.input.attrs({
@@ -96,12 +96,7 @@ const TodoListContainer = ({ todoList = [], onChangeChecked }) => {
           {todo.content}
         </span>
         <div className="ref-id">
-          <p>
-            {Array.isArray(todo.refId) &&
-              todo.refId.reduce((preValue, curValue) => {
-                return `${preValue}@${curValue}`;
-              }, '')}
-          </p>
+          <p>{Array.isArray(todo.refId) && attachPrefix(todo.refId, '@')}</p>
         </div>
         <div className="date">
           <span className="create-date">
