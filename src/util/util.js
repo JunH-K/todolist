@@ -24,7 +24,7 @@ const getMillisecondsToDate = milliseconds => {
 };
 
 const isRefIdValid = refIds => {
-  return /(@[0-9]*)$/g.test(refIds);
+  return /(^@[@0-9]*)$/g.test(refIds);
 };
 
 export { getMillisecondsToDate, isRefIdValid };
