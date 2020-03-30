@@ -38,4 +38,16 @@ const extractFromString = (str, separator) => {
   return values.filter(Boolean);
 };
 
-export { getMillisecondsToDate, isRefIdValid, extractFromString };
+/**
+ * target 각요소에 prefix를 붙여준다
+ * @param target prefix를 붙일 배열
+ * @param prefix
+ * @returns {*}
+ */
+const attachPrefix = (target = [], prefix = '') => {
+  return target.reduce((preValue, curValue) => {
+    return `${preValue}${prefix}${curValue}`;
+  }, '');
+};
+
+export { getMillisecondsToDate, isRefIdValid, extractFromString, attachPrefix };
