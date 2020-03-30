@@ -6,6 +6,9 @@ import {
   TODO_LIST_ERROR,
   ADD_TODO_REQUEST,
   ADD_TODO_ERROR,
+  EDIT_TODO_REQUEST,
+  EDIT_TODO_ERROR,
+  EDIT_TODO_SUCCESS,
 } from '../reducers/todos';
 
 function todoListAPI(data) {
@@ -60,6 +63,32 @@ function* watchAddTodo() {
   yield takeLatest(ADD_TODO_REQUEST, addTodo);
 }
 
+function editTodoAPI(data) {
+  const { id, ...rest } = data;
+  return axios.patch(`/todos/${id}`, rest);
+}
+
+function* editTodo(action) {
+  try {
+    const result = yield call(editTodoAPI, action.data);
+    const [editedTodo] = result.data;
+    yield put({
+      type: EDIT_TODO_SUCCESS,
+      data: editedTodo,
+    });
+  } catch (e) {
+    console.error(e);
+    yield put({
+      type: EDIT_TODO_ERROR,
+      error: e,
+    });
+  }
+}
+
+function* watchEditTodo() {
+  yield takeLatest(EDIT_TODO_REQUEST, editTodo);
+}
+
 export default function* todoSaga() {
-  yield all([fork(watchTodoList), fork(watchAddTodo)]);
+  yield all([fork(watchTodoList), fork(watchAddTodo), fork(watchEditTodo)]);
 }
