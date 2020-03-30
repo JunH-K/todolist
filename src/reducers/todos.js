@@ -7,6 +7,10 @@ export const TODO_LIST_ERROR = 'todos/TODO_LIST_ERROR';
 export const ADD_TODO_REQUEST = 'todos/ADD_TODO_REQUEST';
 export const ADD_TODO_ERROR = 'todos/ADD_TODO_ERROR';
 
+export const EDIT_TODO_REQUEST = 'todos/EDIT_TODO_REQUEST';
+export const EDIT_TODO_SUCCESS = 'todos/EDIT_TODO_SUCCESS';
+export const EDIT_TODO_ERROR = 'todos/EDIT_TODO_ERROR';
+
 const defaultState = {
   todoList: [],
   isLoading: false,
@@ -27,6 +31,42 @@ const todos = handleActions(
         ...state,
         todoList: action.data.row,
         pageInfo: action.data.pageInfo,
+        isLoading: false,
+      };
+    },
+
+    [EDIT_TODO_REQUEST]: (state, action) => {
+      const { id } = action.data;
+      const nextTodoList = state.todoList.map(todo => {
+        if (todo.id === id) {
+          return {
+            ...todo,
+            ...action.data,
+          };
+        }
+        return todo;
+      });
+      return {
+        ...state,
+        todoList: nextTodoList,
+        isLoading: true,
+      };
+    },
+    [EDIT_TODO_SUCCESS]: (state, action) => {
+      const { id } = action.data;
+      const nextTodoList = state.todoList.map(todo => {
+        if (todo.id === id) {
+          return {
+            ...todo,
+            ...action.data,
+          };
+        }
+        return todo;
+      });
+
+      return {
+        ...state,
+        todoList: nextTodoList,
         isLoading: false,
       };
     },
