@@ -96,7 +96,12 @@ const TodoListContainer = ({ todoList = [], onChangeChecked }) => {
           {todo.content}
         </span>
         <div className="ref-id">
-          <p>{todo.refId}</p>
+          <p>
+            {Array.isArray(todo.refId) &&
+              todo.refId.reduce((preValue, curValue) => {
+                return `${preValue}@${curValue}`;
+              }, '')}
+          </p>
         </div>
         <div className="date">
           <span className="create-date">
