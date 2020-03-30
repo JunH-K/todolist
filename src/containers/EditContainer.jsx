@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { Button, TodoForm } from '../components';
 import { useDispatch } from 'react-redux';
 import { attachPrefix, extractFromString } from '../util/util';
-import { ADD_TODO_REQUEST, EDIT_TODO_REQUEST } from '../reducers/todos';
+import { DELETE_TODO_REQUEST, EDIT_TODO_REQUEST } from '../reducers/todos';
 
 const EditContainer = ({
   id,
@@ -33,8 +33,16 @@ const EditContainer = ({
         refId: extractFromString(refValue, '@'),
       },
     });
-    onClickCancel();
   }, [todoValue, refValue]);
+
+  const onClickDelete = useCallback(() => {
+    dispatch({
+      type: DELETE_TODO_REQUEST,
+      data: {
+        id,
+      },
+    });
+  }, []);
 
   return (
     <TodoForm
@@ -51,7 +59,12 @@ const EditContainer = ({
         name="취소"
         onClick={onClickCancel}
       />
-      <Button type="button" className="delete" name="삭제" />
+      <Button
+        type="button"
+        className="delete"
+        name="삭제"
+        onClick={onClickDelete}
+      />
     </TodoForm>
   );
 };
