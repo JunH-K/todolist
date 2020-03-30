@@ -3,6 +3,7 @@ import { TodoFormStyle } from './Style';
 import { Button, InputText } from '../index';
 import { useDispatch } from 'react-redux';
 import { ADD_TODO } from '../../reducers/todos';
+import { isRefIdValid } from '../../util/util';
 
 const TodoForm = ({
   todoValue,
@@ -13,6 +14,12 @@ const TodoForm = ({
   onChangeRefId,
   onClickAddTodo,
 }) => {
+  const [isDisabled, setIsDisabled] = useState(false);
+
+  const isValidCallback = isValid => {
+    setIsDisabled(!isValid);
+  };
+
   return (
     <TodoFormStyle>
       <div className="write-todo">
@@ -27,6 +34,7 @@ const TodoForm = ({
           className="add"
           onClick={onClickAddTodo}
           name={doneText}
+          disabled={isDisabled}
         />
       </div>
       <div className="write-ref">
@@ -35,6 +43,8 @@ const TodoForm = ({
           placeholder="참조 Todo 아이디입력.. ex) @1@5"
           onChange={onChangeRefId}
           defaultValue={refValue}
+          validationFunc={isRefIdValid}
+          isValidCallback={isValidCallback}
         />
         {children}
       </div>

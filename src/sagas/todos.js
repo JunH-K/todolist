@@ -10,7 +10,7 @@ import {
 
 function todoListAPI(data) {
   const { page = 1, limit = 5, countPage = 3 } = data;
-  debugger;
+
   return axios.get(`/todos?page=${page}&limit=${limit}&countPage=${countPage}`);
 }
 
