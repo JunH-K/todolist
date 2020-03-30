@@ -34,7 +34,7 @@ const TodoForm = ({
           className="add"
           onClick={onClickAddTodo}
           name={doneText}
-          disabled={isDisabled}
+          disabled={isDisabled || !todoValue}
         />
       </div>
       <div className="write-ref">
