@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react';
-import { Button, TodoForm } from '../components';
+import { Button, TodoForm } from '../../components';
 import { useDispatch } from 'react-redux';
-import { attachPrefix, extractFromString } from '../util/util';
-import { DELETE_TODO_REQUEST, EDIT_TODO_REQUEST } from '../reducers/todos';
+import { attachPrefix, extractFromString } from '../../util/util';
+import { DELETE_TODO_REQUEST, EDIT_TODO_REQUEST } from '../../reducers/todos';
 
 const EditContainer = ({
   id,

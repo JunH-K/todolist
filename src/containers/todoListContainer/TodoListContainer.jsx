@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import { attachPrefix, getMillisecondsToDate } from '../util/util';
-import EditContainer from './EditContainer';
-import { EDIT_TODO_REQUEST } from '../reducers/todos';
+import { attachPrefix, getMillisecondsToDate } from '../../util/util';
+import EditContainer from '../editContainer/EditContainer';
+import { EDIT_TODO_REQUEST } from '../../reducers/todos';
 
 const CheckBox = styled.input.attrs({
   type: 'checkbox',
