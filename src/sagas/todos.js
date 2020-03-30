@@ -4,7 +4,7 @@ import {
   TODO_LIST_REQUEST,
   TODO_LIST_SUCCESS,
   TODO_LIST_ERROR,
-  ADD_TODO,
+  ADD_TODO_REQUEST,
   ADD_TODO_ERROR,
 } from '../reducers/todos';
 
@@ -57,7 +57,7 @@ function* addTodo(action) {
 }
 
 function* watchAddTodo() {
-  yield takeLatest(ADD_TODO, addTodo);
+  yield takeLatest(ADD_TODO_REQUEST, addTodo);
 }
 
 export default function* todoSaga() {
