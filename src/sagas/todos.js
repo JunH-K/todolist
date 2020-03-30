@@ -9,6 +9,7 @@ import {
   EDIT_TODO_REQUEST,
   EDIT_TODO_ERROR,
   EDIT_TODO_SUCCESS,
+  DELETE_TODO_REQUEST,
 } from '../reducers/todos';
 
 function todoListAPI(data) {
@@ -89,6 +90,32 @@ function* watchEditTodo() {
   yield takeLatest(EDIT_TODO_REQUEST, editTodo);
 }
 
+function deleteTodoAPI(data) {
+  const { id } = data;
+  return axios.delete(`/todos/${id}`);
+}
+
+function* deleteTodo(action) {
+  try {
+    const result = yield call(deleteTodoAPI, action.data);
+  } catch (e) {
+    console.error(e);
+    yield put({
+      type: EDIT_TODO_ERROR,
+      error: e,
+    });
+  }
+}
+
+function* watchDeleteTodo() {
+  yield takeLatest(DELETE_TODO_REQUEST, deleteTodo);
+}
+
 export default function* todoSaga() {
-  yield all([fork(watchTodoList), fork(watchAddTodo), fork(watchEditTodo)]);
+  yield all([
+    fork(watchTodoList),
+    fork(watchAddTodo),
+    fork(watchEditTodo),
+    fork(watchDeleteTodo),
+  ]);
 }
