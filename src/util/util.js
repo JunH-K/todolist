@@ -45,9 +45,12 @@ const extractFromString = (str, separator) => {
  * @returns {*}
  */
 const attachPrefix = (target = [], prefix = '') => {
-  return target.reduce((preValue, curValue) => {
-    return `${preValue}${prefix}${curValue}`;
-  }, '');
+  if (Array.isArray(target)) {
+    return target.reduce((preValue, curValue) => {
+      return `${preValue}${prefix}${curValue}`;
+    }, '');
+  }
+  return '';
 };
 
 export { getMillisecondsToDate, isRefIdValid, extractFromString, attachPrefix };
