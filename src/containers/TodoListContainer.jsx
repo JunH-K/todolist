@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import { useDispatch } from 'react-redux';
 import { attachPrefix, getMillisecondsToDate } from '../util/util';
 import EditContainer from './EditContainer';
+import { EDIT_TODO_REQUEST } from '../reducers/todos';
 
 const CheckBox = styled.input.attrs({
   type: 'checkbox',
@@ -49,7 +51,8 @@ const TodoStyle = styled.div`
   }
 `;
 
-const TodoListContainer = ({ todoList = [], onChangeChecked }) => {
+const TodoListContainer = ({ todoList = [] }) => {
+  const dispatch = useDispatch();
   const [editId, setEditId] = useState(-1);
   const noEditing = useRef(-1);
 
@@ -57,8 +60,38 @@ const TodoListContainer = ({ todoList = [], onChangeChecked }) => {
     setEditId(noEditing.current);
   }, [todoList]);
 
-  const onChange = id => () => {
-    onChangeChecked === 'function' && onChangeChecked(id);
+  const checkRefTodo = id => {
+    const [todo] = todoList.filter(todo => {
+      return todo.id === id;
+    });
+
+    const { refId = [] } = todo;
+
+    const isDoneRefTodo = todoList
+      .filter(todo => {
+        return refId.includes(todo.id.toString());
+      })
+      .every(todo => {
+        return todo.done;
+      });
+
+    return isDoneRefTodo;
+  };
+
+  const onChangeChecked = id => e => {
+    const isAllDone = checkRefTodo(id);
+
+    if (!isAllDone) {
+      return;
+    }
+
+    dispatch({
+      type: EDIT_TODO_REQUEST,
+      data: {
+        id,
+        done: e.target.checked,
+      },
+    });
   };
 
   const onClickEdit = id => () => {
@@ -86,10 +119,8 @@ const TodoListContainer = ({ todoList = [], onChangeChecked }) => {
       <TodoStyle key={todo.id + todo.createdAt} done={todo.done}>
         <CheckBox
           type="checkbox"
-          id="1"
-          name="vehicle1"
           checked={todo.done}
-          onChange={onChange(todo.id)}
+          onChange={onChangeChecked(todo.id)}
         />
         <span data-id="1" className="todo-id">
           {todo.id}
