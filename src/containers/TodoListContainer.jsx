@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { getMillisecondsToDate } from '../util/util';
+import { attachPrefix, getMillisecondsToDate } from '../util/util';
 import EditContainer from './EditContainer';
 
 const CheckBox = styled.input.attrs({
@@ -51,6 +51,11 @@ const TodoStyle = styled.div`
 
 const TodoListContainer = ({ todoList = [], onChangeChecked }) => {
   const [editId, setEditId] = useState(-1);
+  const noEditing = useRef(-1);
+
+  useEffect(() => {
+    setEditId(noEditing.current);
+  }, [todoList]);
 
   const onChange = id => () => {
     onChangeChecked === 'function' && onChangeChecked(id);
@@ -61,15 +66,16 @@ const TodoListContainer = ({ todoList = [], onChangeChecked }) => {
   };
 
   const onClickCancel = () => {
-    setEditId(-1);
+    setEditId(noEditing.current);
   };
 
-  return todoList.map((todo, index) => {
+  return todoList.map(todo => {
     if (todo.id === editId) {
       return (
         <EditContainer
           todoValue={todo.content}
           refValue={todo.refId}
+          id={todo.id}
           key={todo.id + todo.createdAt}
           onClickCancel={onClickCancel}
         />
@@ -96,7 +102,7 @@ const TodoListContainer = ({ todoList = [], onChangeChecked }) => {
           {todo.content}
         </span>
         <div className="ref-id">
-          <p>{todo.refId}</p>
+          <p>{Array.isArray(todo.refId) && attachPrefix(todo.refId, '@')}</p>
         </div>
         <div className="date">
           <span className="create-date">

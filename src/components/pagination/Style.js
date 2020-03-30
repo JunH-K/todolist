@@ -13,7 +13,7 @@ const Pagination = styled.div`
   }
 
   a.active {
-    background-color: #7c7c7c;
+    background-color: #0078d7;
     color: white;
     border-radius: 5px;
   }

@@ -6,6 +6,11 @@ const InputTextStyle = styled.input`
   width: 80%;
   height: 30px;
   border: 1px solid #ccc;
+  ${({ isError }) => {
+    if (isError) {
+      return `color:red;`;
+    }
+  }}
 `;
 
 const ButtonStyle = styled.button`
@@ -17,6 +22,11 @@ const ButtonStyle = styled.button`
   cursor: pointer;
   border-radius: 2px;
   height: 30px;
+  ${({ disabled }) => {
+    if (disabled) {
+      return 'opacity:0.2;';
+    }
+  }}
 `;
 
 const TodoFormStyle = styled.div`

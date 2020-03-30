@@ -58,7 +58,7 @@ body {
 
   @media (max-width: 768px) {
     body{
-    width:100vw;
+    width:100%;
     padding: 0;
     transition: all .5s;
     }

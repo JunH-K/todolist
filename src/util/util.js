@@ -1,3 +1,8 @@
+/**
+ *
+ * @param milliseconds 밀리초
+ * @returns {string} YYYY.MM.DD hh.mm:ss
+ */
 const getMillisecondsToDate = milliseconds => {
   const date = new Date(milliseconds);
   const year = date.getFullYear();
@@ -18,4 +23,34 @@ const getMillisecondsToDate = milliseconds => {
   return `${year}.${month}.${day} ${hours}:${minutes}:${seconds}`;
 };
 
-export { getMillisecondsToDate };
+const isRefIdValid = refIds => {
+  return /(^@[@0-9]*)$/g.test(refIds);
+};
+
+/**
+ *
+ * @param str 추출할 문자열
+ * @param separator 추출기준
+ * @returns {*} separator 기준으로 추출하고 빈값들은 제거 후 return
+ */
+const extractFromString = (str, separator) => {
+  const values = str.split(separator);
+  return values.filter(Boolean);
+};
+
+/**
+ * target 각요소에 prefix를 붙여준다
+ * @param target prefix를 붙일 배열
+ * @param prefix
+ * @returns {*}
+ */
+const attachPrefix = (target = [], prefix = '') => {
+  if (Array.isArray(target)) {
+    return target.reduce((preValue, curValue) => {
+      return `${preValue}${prefix}${curValue}`;
+    }, '');
+  }
+  return '';
+};
+
+export { getMillisecondsToDate, isRefIdValid, extractFromString, attachPrefix };
