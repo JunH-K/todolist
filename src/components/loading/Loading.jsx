@@ -35,9 +35,9 @@ const Style = styled.div`
   }
 `;
 
-const Loading = ({ isLoading = false }) => {
+const Loading = () => {
   return (
-    <Style className="loading" isLoading={isLoading}>
+    <Style className="loading" isLoading={false}>
       <div className="ball"></div>
     </Style>
   );
