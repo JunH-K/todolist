@@ -70,6 +70,7 @@ const TodoListContainer = ({ todoList = [], onChangeChecked }) => {
         <EditContainer
           todoValue={todo.content}
           refValue={todo.refId}
+          id={todo.id}
           key={todo.id + todo.createdAt}
           onClickCancel={onClickCancel}
         />
