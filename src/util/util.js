@@ -27,4 +27,15 @@ const isRefIdValid = refIds => {
   return /(^@[@0-9]*)$/g.test(refIds);
 };
 
-export { getMillisecondsToDate, isRefIdValid };
+/**
+ *
+ * @param str 추출할 문자열
+ * @param separator 추출기준
+ * @returns {*} separator 기준으로 추출하고 빈값들은 제거 후 return
+ */
+const extractFromString = (str, separator) => {
+  const values = str.split(separator);
+  return values.filter(Boolean);
+};
+
+export { getMillisecondsToDate, isRefIdValid, extractFromString };
