@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import querystring from 'querystring';
 import { HeaderStyle, MoreActionStyle } from './Style';
 import { useHistory } from 'react-router-dom';
@@ -13,7 +13,7 @@ const Header = props => {
   const [search, setSearch] = useState('');
   const timer = useRef(0);
 
-  const request = value => {
+  const request = useCallback(value => {
     if (timer.current) {
       clearTimeout(timer.current);
     }
@@ -27,21 +27,21 @@ const Header = props => {
 
       history.push(`./1?${querystring.stringify(query)}`);
     }, 500);
-  };
+  }, []);
 
-  const onChange = e => {
+  const onChange = useCallback(e => {
     const {
       target: { value },
     } = e;
     setSearch(value);
     request(value);
-  };
+  }, []);
 
-  const onKeyDown = e => {
+  const onKeyDown = useCallback(e => {
     if (e.keyCode === 13) {
       request(search);
     }
-  };
+  }, []);
 
   return (
     <HeaderStyle>
