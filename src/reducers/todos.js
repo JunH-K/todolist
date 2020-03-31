@@ -19,13 +19,15 @@ const defaultState = {
   todoList: [],
   isLoading: false,
   pageInfo: {},
+  queryString: {},
 };
 
 const todos = handleActions(
   {
-    [TODO_LIST_REQUEST]: state => {
+    [TODO_LIST_REQUEST]: (state, action) => {
       return {
         ...state,
+        queryString: { ...state.queryString, ...action.data },
         isLoading: true,
       };
     },
