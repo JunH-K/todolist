@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import { attachPrefix, getMillisecondsToDate } from '../../util/util';
 import EditContainer from '../editContainer/EditContainer';
 import { EDIT_TODO_REQUEST } from '../../reducers/todos';
+import { showToast } from '../../components';
 
 const CheckBox = styled.input.attrs({
   type: 'checkbox',
@@ -60,36 +61,50 @@ const TodoListContainer = ({ todoList = [] }) => {
     setEditId(noEditing.current);
   }, [todoList]);
 
-  const checkRefTodo = id => {
+  const getRefTodoState = id => {
     const [todo] = todoList.filter(todo => {
       return todo.id === id;
     });
-
     const { refId = [] } = todo;
 
-    const isDoneRefTodo = todoList
-      .filter(todo => {
-        return refId.includes(todo.id.toString());
-      })
-      .every(todo => {
-        return todo.done;
-      });
+    const refTodo = todoList.filter(todo => {
+      return refId.includes(todo.id.toString());
+    });
 
-    return isDoneRefTodo;
+    return refTodo.reduce(
+      (preValue, curValue) => {
+        if (curValue.done) {
+          return {
+            ...preValue,
+            done: [curValue.id, ...preValue.done],
+          };
+        }
+        return {
+          ...preValue,
+          notDone: [curValue.id, ...preValue.notDone],
+        };
+      },
+      { done: [], notDone: [] }
+    );
   };
 
   const onChangeChecked = id => e => {
-    const isAllDone = checkRefTodo(id);
-
-    if (!isAllDone) {
-      return;
+    const {
+      target: { checked },
+    } = e;
+    if (checked) {
+      const { notDone } = getRefTodoState(id);
+      if (notDone.length) {
+        showToast(`${attachPrefix(notDone, '@')} 이 완료되지 않았습니다.`);
+        return;
+      }
     }
 
     dispatch({
       type: EDIT_TODO_REQUEST,
       data: {
         id,
-        done: e.target.checked,
+        done: checked,
       },
     });
   };
