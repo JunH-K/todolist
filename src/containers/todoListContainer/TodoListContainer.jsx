@@ -138,15 +138,15 @@ const TodoListContainer = ({ todoList = [] }) => {
           onChange={onChangeChecked(todo.id)}
         />
         <span data-id="1" className="todo-id">
-          {todo.id}
+          @{todo.id}
         </span>
-        <span
+        <p
           className="content"
           title="클릭하여 수정 or 삭제"
           onClick={onClickEdit(todo.id)}
         >
           {todo.content}
-        </span>
+        </p>
         <div className="ref-id">
           <p>{Array.isArray(todo.refId) && attachPrefix(todo.refId, '@')}</p>
         </div>
