@@ -1,17 +1,15 @@
 import React, { useState } from 'react';
 import { InputTextStyle } from './Style';
 
-const InputText = (
-  {
-    className,
-    placeholder = '',
-    onChange,
-    defaultValue,
-    validationFunc,
-    isValidCallback,
-  },
+const InputText = ({
+  className,
+  placeholder = '',
+  onChange,
+  defaultValue,
+  validationFunc,
+  isValidCallback,
   ...rest
-) => {
+}) => {
   const [isError, setIsError] = useState(false);
 
   const checkIsValid = value => {

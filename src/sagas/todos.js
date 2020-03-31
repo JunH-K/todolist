@@ -1,4 +1,5 @@
 import { all, fork, put, takeLatest, delay, call } from 'redux-saga/effects';
+import querystring from 'querystring';
 import axios from 'axios';
 import {
   TODO_LIST_REQUEST,
@@ -13,9 +14,9 @@ import {
 } from '../reducers/todos';
 
 function todoListAPI(data) {
-  const { page = 1, limit = 5, countPage = 3 } = data;
+  const query = querystring.stringify(data);
 
-  return axios.get(`/todos?page=${page}&limit=${limit}&countPage=${countPage}`);
+  return axios.get(`/todos?${query}`);
 }
 
 function* todoList(action) {
@@ -49,7 +50,7 @@ function* addTodo(action) {
 
     yield put({
       type: TODO_LIST_REQUEST,
-      data: result.data,
+      // data: result.data,
     });
   } catch (e) {
     console.error(e);

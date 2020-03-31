@@ -19,13 +19,15 @@ const defaultState = {
   todoList: [],
   isLoading: false,
   pageInfo: {},
+  queryString: {},
 };
 
 const todos = handleActions(
   {
-    [TODO_LIST_REQUEST]: state => {
+    [TODO_LIST_REQUEST]: (state, action) => {
       return {
         ...state,
+        queryString: { ...state.queryString, ...action.data },
         isLoading: true,
       };
     },
@@ -38,7 +40,12 @@ const todos = handleActions(
         isLoading: false,
       };
     },
-
+    [TODO_LIST_ERROR]: state => {
+      return {
+        ...state,
+        isLoading: false,
+      };
+    },
     [EDIT_TODO_REQUEST]: (state, action) => {
       const { id } = action.data;
       const nextTodoList = state.todoList.map(todo => {
@@ -74,6 +81,12 @@ const todos = handleActions(
         isLoading: false,
       };
     },
+    [EDIT_TODO_ERROR]: state => {
+      return {
+        ...state,
+        isLoading: false,
+      };
+    },
     [DELETE_TODO_REQUEST]: (state, action) => {
       const { id } = action.data;
       const nextTodoList = state.todoList.filter(todo => {
@@ -82,6 +95,12 @@ const todos = handleActions(
       return {
         ...state,
         todoList: nextTodoList,
+      };
+    },
+    [DELETE_TODO_ERROR]: state => {
+      return {
+        ...state,
+        isLoading: false,
       };
     },
   },

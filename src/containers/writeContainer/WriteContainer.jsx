@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react';
-import { TodoForm } from '../components';
+import { TodoForm } from '../../components';
 import { useDispatch } from 'react-redux';
-import { ADD_TODO_REQUEST } from '../reducers/todos';
-import { extractFromString } from '../util/util';
+import { ADD_TODO_REQUEST } from '../../reducers/todos';
+import { extractFromString } from '../../util/util';
 
 const WriteContainer = () => {
   const dispatch = useDispatch();

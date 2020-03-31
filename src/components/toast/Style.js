@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-const Alert = styled.div`
+const Toast = styled.div`
   line-height: 20px;
   display: none;
   position: absolute;
@@ -43,4 +43,4 @@ const Alert = styled.div`
   }
 `;
 
-export default Alert;
+export default Toast;

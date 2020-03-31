@@ -1,7 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { attachPrefix, getMillisecondsToDate } from '../util/util';
-import EditContainer from './EditContainer';
+import { useDispatch } from 'react-redux';
+import { attachPrefix, getMillisecondsToDate } from '../../util/util';
+import EditContainer from '../editContainer/EditContainer';
+import { EDIT_TODO_REQUEST } from '../../reducers/todos';
+import { showToast } from '../../components';
 
 const CheckBox = styled.input.attrs({
   type: 'checkbox',
@@ -49,7 +52,8 @@ const TodoStyle = styled.div`
   }
 `;
 
-const TodoListContainer = ({ todoList = [], onChangeChecked }) => {
+const TodoListContainer = ({ todoList = [] }) => {
+  const dispatch = useDispatch();
   const [editId, setEditId] = useState(-1);
   const noEditing = useRef(-1);
 
@@ -57,8 +61,52 @@ const TodoListContainer = ({ todoList = [], onChangeChecked }) => {
     setEditId(noEditing.current);
   }, [todoList]);
 
-  const onChange = id => () => {
-    onChangeChecked === 'function' && onChangeChecked(id);
+  const getRefTodoState = id => {
+    const [todo] = todoList.filter(todo => {
+      return todo.id === id;
+    });
+    const { refId = [] } = todo;
+
+    const refTodo = todoList.filter(todo => {
+      return refId.includes(todo.id.toString());
+    });
+
+    return refTodo.reduce(
+      (preValue, curValue) => {
+        if (curValue.done) {
+          return {
+            ...preValue,
+            done: [curValue.id, ...preValue.done],
+          };
+        }
+        return {
+          ...preValue,
+          notDone: [curValue.id, ...preValue.notDone],
+        };
+      },
+      { done: [], notDone: [] }
+    );
+  };
+
+  const onChangeChecked = id => e => {
+    const {
+      target: { checked },
+    } = e;
+    if (checked) {
+      const { notDone } = getRefTodoState(id);
+      if (notDone.length) {
+        showToast(`${attachPrefix(notDone, '@')} 이 완료되지 않았습니다.`);
+        return;
+      }
+    }
+
+    dispatch({
+      type: EDIT_TODO_REQUEST,
+      data: {
+        id,
+        done: checked,
+      },
+    });
   };
 
   const onClickEdit = id => () => {
@@ -86,21 +134,19 @@ const TodoListContainer = ({ todoList = [], onChangeChecked }) => {
       <TodoStyle key={todo.id + todo.createdAt} done={todo.done}>
         <CheckBox
           type="checkbox"
-          id="1"
-          name="vehicle1"
           checked={todo.done}
-          onChange={onChange(todo.id)}
+          onChange={onChangeChecked(todo.id)}
         />
         <span data-id="1" className="todo-id">
-          {todo.id}
+          @{todo.id}
         </span>
-        <span
+        <p
           className="content"
           title="클릭하여 수정 or 삭제"
           onClick={onClickEdit(todo.id)}
         >
           {todo.content}
-        </span>
+        </p>
         <div className="ref-id">
           <p>{Array.isArray(todo.refId) && attachPrefix(todo.refId, '@')}</p>
         </div>
