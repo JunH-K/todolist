@@ -11,6 +11,7 @@ import { TODO_LIST_REQUEST } from '../../reducers/todos';
 const Header = props => {
   const history = useHistory();
   const [search, setSearch] = useState('');
+  const [isMoreMenu, setIsMoreMenu] = useState(false);
   const timer = useRef(0);
 
   const request = useCallback(value => {
@@ -43,6 +44,10 @@ const Header = props => {
     }
   }, []);
 
+  const onClickMoreAction = useCallback(() => {
+    setIsMoreMenu(!isMoreMenu);
+  }, [isMoreMenu]);
+
   return (
     <HeaderStyle>
       <InputText
@@ -52,8 +57,13 @@ const Header = props => {
         onKeyDown={onKeyDown}
         value={search}
       />
-      <Button type="button" className="more-action" name="더보기" />
-      {/* <MoreAction /> */}
+      <Button
+        type="button"
+        className="more-action"
+        name="더보기"
+        onClick={onClickMoreAction}
+      />
+      {isMoreMenu && <MoreAction />}
     </HeaderStyle>
   );
 };
