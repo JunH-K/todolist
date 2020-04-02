@@ -1,8 +1,9 @@
 import React, { useCallback } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import PaginationStyle from './Style';
 import { useSelector } from 'react-redux';
 import querystring from 'querystring';
+import PaginationStyle from './Style';
 
 const Pagination = props => {
   const {
@@ -56,13 +57,23 @@ const Pagination = props => {
           &gt;
         </Link>
       )}
-      {curPage !== totalPage && (
+      {totalPage > 0 && (
         <Link to={`/page/${totalPage}${queryString}`} title="마지막페이지">
           &raquo;
         </Link>
       )}
     </PaginationStyle>
   );
+};
+
+Pagination.defaultProps = { pageInfo: {} };
+Pagination.propTypes = {
+  pageInfo: PropTypes.shape({
+    pageCount: PropTypes.arrayOf(PropTypes.array),
+    isPrePage: PropTypes.bool,
+    isNextPage: PropTypes.bool,
+    totalPage: PropTypes.number,
+  }),
 };
 
 export default Pagination;
