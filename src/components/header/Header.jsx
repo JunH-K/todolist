@@ -1,14 +1,12 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import querystring from 'querystring';
-import { HeaderStyle, MoreActionStyle } from './Style';
+import { HeaderStyle } from './Style';
 import { useHistory } from 'react-router-dom';
 import InputText from '../form/InputText';
 import { Button } from '..';
 import MoreAction from './MoreAction';
-import { useDispatch } from 'react-redux';
-import { TODO_LIST_REQUEST } from '../../reducers/todos';
 
-const Header = props => {
+const Header = () => {
   const history = useHistory();
   const [search, setSearch] = useState('');
   const [isMoreMenu, setIsMoreMenu] = useState(false);
@@ -26,7 +24,7 @@ const Header = props => {
         };
       }
 
-      history.push(`./1?${querystring.stringify(query)}`);
+      history.push(`?${querystring.stringify(query)}`);
     }, 500);
   }, []);
 
@@ -51,7 +49,6 @@ const Header = props => {
   const onClickOutside = () => {
     setIsMoreMenu(false);
   };
-  const onClickMenuItem = () => {};
 
   return (
     <HeaderStyle>
@@ -68,12 +65,7 @@ const Header = props => {
         name="더보기"
         onClick={onClickMoreAction}
       />
-      {isMoreMenu && (
-        <MoreAction
-          onClickOutside={onClickOutside}
-          onClickMenuItem={onClickMenuItem}
-        />
-      )}
+      {isMoreMenu && <MoreAction onClickOutside={onClickOutside} />}
     </HeaderStyle>
   );
 };
