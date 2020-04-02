@@ -37,6 +37,7 @@ const TodoStyle = styled.div`
       if (done) {
         return 'text-decoration: line-through;color: #b6b6b6;';
       }
+      return '';
     }}
   }
 

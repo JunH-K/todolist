@@ -1,19 +1,94 @@
-import React from 'react';
-import { HeaderStyle, MoreActionStyle } from './Style';
+import React, { useCallback } from 'react';
+import PropTypes from 'prop-types';
+import { MoreActionStyle, MoreActonContainerStyle } from './Style';
+import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import querystring from 'querystring';
 
-const MoreAction = () => {
-  return (
-    <MoreActionStyle className="more-action-menu">
-      <div className="menu">생성일 정렬</div>
-      <div className="menu">수정일 정렬</div>
-      <hr />
-      <div className="menu">완료목록보기</div>
-      <div className="menu">완료목록숨기기</div>
-      <hr />
-      <div className="menu">백업</div>
-      <div className="menu">복원</div>
-    </MoreActionStyle>
+const menus = [
+  { name: '생성일 오름차순', key: 'createdAsc' },
+  { name: '생성일 내림차순', key: 'createdDesc' },
+  '',
+  { name: '수정일 오름차순', key: 'updatedAsc' },
+  { name: '수정일 내림차순', key: 'updatedDesc' },
+  '',
+  { name: '전체목록 표시', key: 'all' },
+  { name: '완료목록 표시', key: 'done' },
+  { name: '미완료목록 표시', key: 'undone' },
+  '',
+  { name: '백업', key: 'backup' },
+  { name: '복원', key: 'restore' },
+];
+
+const menusQuery = {
+  createdAsc: { sort: 'createdAt', order: 'asc' },
+  createdDesc: { sort: 'createdAt', order: 'desc' },
+  updatedAsc: { sort: 'updateAt', order: 'asc' },
+  updatedDesc: { sort: 'updateAt', order: 'desc' },
+  all: { done: '' },
+  done: { done: true },
+  undone: { done: false },
+};
+
+const MoreAction = ({ onClickOutside }) => {
+  const history = useHistory();
+  const { queryString } = useSelector(state => state.todos);
+
+  const combineQueryString = useCallback(
+    menu => {
+      let querys = {};
+
+      Object.keys(queryString)
+        .filter(query => query !== 'page')
+        .forEach(query => {
+          if (queryString[query]) {
+            querys[query] = queryString[query];
+          }
+        });
+
+      querys = {
+        ...querys,
+        ...menusQuery[menu],
+      };
+      return querys;
+    },
+    [queryString]
   );
+
+  const onClickMenuItem = useCallback(e => {
+    const {
+      target: {
+        dataset: { menu },
+      },
+    } = e;
+    if (!menu) {
+      return;
+    }
+    const string = combineQueryString(menu);
+
+    history.push(`/page/1?${querystring.stringify(string)}`);
+  }, []);
+
+  return (
+    <MoreActonContainerStyle onClick={onClickOutside}>
+      <MoreActionStyle className="more-action-menu" onClick={onClickMenuItem}>
+        {menus.map(item => {
+          if (!item) {
+            return <hr key={item.key} />;
+          }
+          return (
+            <div className="menu" data-menu={item.key} key={item.key}>
+              {item.name}
+            </div>
+          );
+        })}
+      </MoreActionStyle>
+    </MoreActonContainerStyle>
+  );
+};
+
+MoreAction.propTypes = {
+  onClickOutside: PropTypes.func.isRequired,
 };
 
 export default MoreAction;

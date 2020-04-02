@@ -1,6 +1,11 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+  HashRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from 'react-router-dom';
 import store from 'store/store';
 import TodoContainer from 'containers/todoContainer/TodoContainer';
 import GlobalStyle from './style/GlobalStyle';
@@ -12,8 +17,13 @@ const App = () => {
       <GlobalStyle />
       <Router>
         <Switch>
-          <Route path="/page/:page" component={TodoContainer} />
-          <Route component={TodoContainer} />
+          <Route exact path="/">
+            <Redirect to="/page/1" />
+          </Route>
+          <Route exact path="/page/:page" component={TodoContainer} />
+          <Route path="*">
+            <Redirect to="/page/1" />
+          </Route>
         </Switch>
       </Router>
       <Toast />

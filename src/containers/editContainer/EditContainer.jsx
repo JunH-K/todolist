@@ -1,4 +1,5 @@
 import React, { useCallback, useState } from 'react';
+import PropTypes from 'prop-types';
 import { Button, TodoForm } from '../../components';
 import { useDispatch } from 'react-redux';
 import { attachPrefix, extractFromString } from '../../util/util';
@@ -8,8 +9,6 @@ const EditContainer = ({
   id,
   todoValue: preTodoValue,
   refValue: preRefValue,
-  completeText,
-  children,
   onClickCancel,
 }) => {
   const dispatch = useDispatch();
@@ -67,6 +66,13 @@ const EditContainer = ({
       />
     </TodoForm>
   );
+};
+
+EditContainer.propTypes = {
+  id: PropTypes.string.isRequired,
+  todoValue: PropTypes.string.isRequired,
+  refValue: PropTypes.string.isRequired,
+  onClickCancel: PropTypes.func.isRequired,
 };
 
 export default EditContainer;
