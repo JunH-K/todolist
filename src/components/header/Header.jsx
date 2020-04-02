@@ -48,6 +48,11 @@ const Header = props => {
     setIsMoreMenu(!isMoreMenu);
   }, [isMoreMenu]);
 
+  const onClickOutside = () => {
+    setIsMoreMenu(false);
+  };
+  const onClickMenuItem = () => {};
+
   return (
     <HeaderStyle>
       <InputText
@@ -63,7 +68,12 @@ const Header = props => {
         name="더보기"
         onClick={onClickMoreAction}
       />
-      {isMoreMenu && <MoreAction />}
+      {isMoreMenu && (
+        <MoreAction
+          onClickOutside={onClickOutside}
+          onClickMenuItem={onClickMenuItem}
+        />
+      )}
     </HeaderStyle>
   );
 };

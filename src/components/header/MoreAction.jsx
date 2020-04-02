@@ -1,18 +1,33 @@
 import React from 'react';
-import { HeaderStyle, MoreActionStyle } from './Style';
+import { MoreActionStyle, MoreActonContainerStyle } from './Style';
 
-const MoreAction = () => {
+const memus = [
+  { name: '생성일 정렬', key: 'create' },
+  { name: '수정일 정렬', key: 'update' },
+  '',
+  { name: '완료목록보기', key: 'visibleDone' },
+  { name: '완료목록숨기기', key: 'invisibleDone' },
+  '',
+  { name: '백업', key: 'backup' },
+  { name: '복원', key: 'restore' },
+];
+
+const MoreAction = ({ onClickOutside, onClickMenuItem }) => {
   return (
-    <MoreActionStyle className="more-action-menu">
-      <div className="menu">생성일 정렬</div>
-      <div className="menu">수정일 정렬</div>
-      <hr />
-      <div className="menu">완료목록보기</div>
-      <div className="menu">완료목록숨기기</div>
-      <hr />
-      <div className="menu">백업</div>
-      <div className="menu">복원</div>
-    </MoreActionStyle>
+    <MoreActonContainerStyle onClick={onClickOutside}>
+      <MoreActionStyle className="more-action-menu" onClick={onClickMenuItem}>
+        {memus.map(item => {
+          if (!item) {
+            return <hr />;
+          }
+          return (
+            <div className="menu" data-menu={item.key}>
+              {item.name}
+            </div>
+          );
+        })}
+      </MoreActionStyle>
+    </MoreActonContainerStyle>
   );
 };
 

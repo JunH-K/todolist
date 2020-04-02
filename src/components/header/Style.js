@@ -24,8 +24,16 @@ const HeaderStyle = styled.div`
   }
 `;
 
+const MoreActonContainerStyle = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 90vh;
+  background: rgba(0, 0, 0, 0);
+  z-index: 999;
+`;
+
 const MoreActionStyle = styled.div`
-  width: 150px;
+  width: 200px;
   position: absolute;
   padding: 5px;
   top: 40px;
@@ -36,9 +44,9 @@ const MoreActionStyle = styled.div`
   z-index: 1;
 
   .menu {
-    height: 20px;
+    height: 30px;
     padding-left: 5px;
-    line-height: 20px;
+    line-height: 30px;
     margin-top: 5px;
     cursor: pointer;
   }
@@ -48,4 +56,4 @@ const MoreActionStyle = styled.div`
   }
 `;
 
-export { HeaderStyle, MoreActionStyle };
+export { HeaderStyle, MoreActionStyle, MoreActonContainerStyle };
