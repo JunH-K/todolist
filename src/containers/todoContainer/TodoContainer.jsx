@@ -11,11 +11,11 @@ const useQuery = () => {
   return new URLSearchParams(useLocation().search);
 };
 
-const getQuey = querys => {
+const getQuery = queryString => {
   const query = useQuery();
   const queryObj = {};
-  querys.forEach(queryString => {
-    queryObj[queryString] = query.get(queryString) || '';
+  queryString.forEach(str => {
+    queryObj[str] = query.get(str) || '';
   });
   return queryObj;
 };
@@ -27,7 +27,7 @@ const TodoContainer = () => {
   const { todoList, pageInfo } = useSelector(state => state.todos);
   const queryStrings = {
     page,
-    ...getQuey(['searchText', 'sort', 'order', 'done', 'searchId']),
+    ...getQuery(['searchText', 'sort', 'order', 'done', 'searchId']),
   };
 
   useEffect(() => {

@@ -64,9 +64,9 @@ const MoreAction = ({ onClickOutside }) => {
     if (!menu) {
       return;
     }
-    const query = combineQueryString(menu);
+    const string = combineQueryString(menu);
 
-    history.push(`/page/1?${querystring.stringify(query)}`);
+    history.push(`/page/1?${querystring.stringify(string)}`);
   }, []);
 
   return (
