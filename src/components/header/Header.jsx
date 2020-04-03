@@ -46,8 +46,10 @@ const Header = () => {
     setIsMoreMenu(!isMoreMenu);
   }, [isMoreMenu]);
 
-  const onClickOutside = () => {
-    setIsMoreMenu(false);
+  const onClickOutside = e => {
+    if (e.target.dataset.name === 'outside') {
+      setIsMoreMenu(false);
+    }
   };
 
   return (
