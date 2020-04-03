@@ -1,10 +1,11 @@
-import React, { useCallback, useRef, useEffect } from 'react';
+import React, { useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { MoreActionStyle, MoreActonContainerStyle } from './Style';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import querystring from 'querystring';
-import dataManager, { BACKUP_REQUEST } from '../../reducers/dataManager';
+import axios from 'axios';
+import { MoreActionStyle, MoreActonContainerStyle } from './Style';
+import { showToast } from '..';
 
 const menus = [
   { name: '생성일 오름차순', key: 'createdAsc' },
@@ -30,17 +31,9 @@ const menusQuery = {
 };
 
 const MoreAction = ({ onClickOutside }) => {
-  const dispatch = useDispatch();
   const history = useHistory();
   const { queryString } = useSelector(state => state.todos);
-  const { backupData } = useSelector(state => state.dataManager);
   const download = useRef(null);
-
-  useEffect(() => {
-    download.current.href = `data:text/json;charset=utf-8,${encodeURIComponent(
-      JSON.stringify(backupData)
-    )}`;
-  }, [dataManager]);
 
   const combineQueryString = useCallback(
     menu => {
@@ -79,14 +72,29 @@ const MoreAction = ({ onClickOutside }) => {
     history.push(`/page/1?${querystring.stringify(string)}`);
   }, []);
 
-  const backup = () => {
-    dispatch({ type: BACKUP_REQUEST });
+  const fetchBackupData = async () => {
+    try {
+      const backupData = await axios.get('/todos');
+      return backupData.data.row;
+    } catch (error) {
+      console.error(error);
+      showToast('백업실패');
+    }
   };
 
-  const restore = () => {};
+  const onClickBackup = () => {
+    fetchBackupData().then(backupData => {
+      download.current.href = `data:text/json;charset=utf-8,${encodeURIComponent(
+        JSON.stringify(backupData)
+      )}`;
+      download.current.click();
+    });
+  };
+
+  const onClickRestore = () => {};
 
   return (
-    <MoreActonContainerStyle onClick={onClickOutside}>
+    <MoreActonContainerStyle onClick={onClickOutside} data-name="outside">
       <MoreActionStyle className="more-action-menu" onClick={onClickMenuItem}>
         {menus.map((item, index) => {
           if (!item) {
@@ -98,9 +106,17 @@ const MoreAction = ({ onClickOutside }) => {
             </div>
           );
         })}
-        <a onClick={backup} id="download" download="backup.json" ref={download}>
-          <div className="menu">데이터 백업</div>
+        <a
+          id="download"
+          download="backup.json"
+          ref={download}
+          style={{ display: 'none' }}
+        >
+          데이터백업
         </a>
+        <div onClick={onClickBackup} className="menu">
+          데이터 백업
+        </div>
         <a>
           <div className="menu">데이터 복원</div>
         </a>
