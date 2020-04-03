@@ -45,7 +45,7 @@ const Pagination = props => {
         return (
           <Link
             to={`/page/${number}${queryString}`}
-            className={number === parseInt(curPage, 10) ? 'active' : ''}
+            className={number === curPage ? 'active' : ''}
             key={number}
           >
             {number}
@@ -57,7 +57,7 @@ const Pagination = props => {
           &gt;
         </Link>
       )}
-      {totalPage > 0 && (
+      {totalPage > 0 && curPage !== totalPage && (
         <Link to={`/page/${totalPage}${queryString}`} title="마지막페이지">
           &raquo;
         </Link>
