@@ -1,7 +1,7 @@
 import React, { useCallback, useRef, useState } from 'react';
 import querystring from 'querystring';
-import { HeaderStyle } from './Style';
 import { useHistory } from 'react-router-dom';
+import { HeaderStyle } from './Style';
 import InputText from '../form/InputText';
 import { Button } from '..';
 import MoreAction from './MoreAction';
