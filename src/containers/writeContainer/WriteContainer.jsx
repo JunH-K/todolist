@@ -1,23 +1,25 @@
 import React, { useCallback, useState } from 'react';
-import { TodoForm } from '../../components';
 import { useDispatch } from 'react-redux';
+import { TodoForm } from '../../components';
 import { ADD_TODO_REQUEST } from '../../reducers/todos';
 import { extractFromString } from '../../util/util';
 
 const WriteContainer = () => {
   const dispatch = useDispatch();
-  const [todoValue, setTodoText] = useState('');
-  const [refValue, setTodoRefId] = useState('');
+  const [todoValue, setTodoValue] = useState('');
+  const [refValue, setRefValue] = useState('');
 
   const onChangeTodo = useCallback(e => {
-    setTodoText(e.target.value);
+    setTodoValue(e.target.value);
   }, []);
 
   const onChangeRefId = useCallback(e => {
-    setTodoRefId(e.target.value);
+    setRefValue(e.target.value);
   }, []);
 
   const onClickAddTodo = useCallback(() => {
+    setTodoValue('');
+    setRefValue('');
     dispatch({
       type: ADD_TODO_REQUEST,
       data: {

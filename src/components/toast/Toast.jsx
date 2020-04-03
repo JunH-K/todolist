@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import Style from './style';
+import Style from './Style';
 
 const alertState = {};
 

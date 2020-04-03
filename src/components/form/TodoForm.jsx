@@ -25,7 +25,7 @@ const TodoForm = ({
           type="text"
           placeholder="할일입력.."
           onChange={onChangeTodo}
-          defaultValue={todoValue}
+          value={todoValue}
         />
         <Button
           type="button"
@@ -40,7 +40,7 @@ const TodoForm = ({
           type="text"
           placeholder="참조 Todo 아이디입력.. ex) @1@5"
           onChange={onChangeRefId}
-          defaultValue={refValue}
+          value={refValue}
           validationFunc={isRefIdValid}
           isValidCallback={isValidCallback}
         />
