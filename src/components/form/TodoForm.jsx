@@ -11,6 +11,7 @@ const TodoForm = ({
   onChangeTodo,
   onChangeRefId,
   onClickAddTodo,
+  maxValue = 100,
 }) => {
   const [isDisabled, setIsDisabled] = useState(false);
 
@@ -26,6 +27,7 @@ const TodoForm = ({
           placeholder="할일입력.."
           onChange={onChangeTodo}
           value={todoValue}
+          maxLength={maxValue}
         />
         <Button
           type="button"
