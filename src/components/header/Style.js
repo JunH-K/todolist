@@ -7,7 +7,7 @@ const HeaderStyle = styled.div`
 
   .search {
     position: absolute;
-    width:77%
+    width:70%
     top: 50%;
     left: 10px;
     transform: translateY(-50%);
