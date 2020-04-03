@@ -6,15 +6,15 @@ import { extractFromString } from '../../util/util';
 
 const WriteContainer = () => {
   const dispatch = useDispatch();
-  const [todoValue, setTodoText] = useState('');
-  const [refValue, setTodoRefId] = useState('');
+  const [todoValue, setTodoValue] = useState('');
+  const [refValue, setRefValue] = useState('');
 
   const onChangeTodo = useCallback(e => {
-    setTodoText(e.target.value);
+    setTodoValue(e.target.value);
   }, []);
 
   const onChangeRefId = useCallback(e => {
-    setTodoRefId(e.target.value);
+    setRefValue(e.target.value);
   }, []);
 
   const onClickAddTodo = useCallback(() => {
