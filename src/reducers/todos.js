@@ -27,7 +27,7 @@ const todos = handleActions(
     [TODO_LIST_REQUEST]: (state, action) => {
       return {
         ...state,
-        queryString: { ...state.queryString, ...action.data },
+        queryString: { ...action.data },
         isLoading: true,
       };
     },

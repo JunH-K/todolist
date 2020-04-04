@@ -14,6 +14,7 @@ const Toast = styled.div`
   color: white;
   opacity: 1;
   border-radius: 10px;
+  z-index: 9999;
 
   &.show {
     display: block;

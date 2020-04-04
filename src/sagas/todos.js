@@ -50,7 +50,7 @@ function* addTodo(action) {
 
     yield put({
       type: TODO_LIST_REQUEST,
-      // data: result.data,
+      data: { page: 1 },
     });
   } catch (e) {
     console.error(e);
