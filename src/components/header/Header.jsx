@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { HeaderStyle } from './Style';
 import InputText from '../form/InputText';
 import { Button } from '..';
-import MoreAction from './MoreAction';
+import MoreActionContainer from '../../containers/moreActionContariner/MoreActionContainer';
 
 const Header = () => {
   const history = useHistory();
@@ -67,7 +67,7 @@ const Header = () => {
         name="더보기"
         onClick={onClickMoreAction}
       />
-      {isMoreMenu && <MoreAction onClickOutside={onClickOutside} />}
+      {isMoreMenu && <MoreActionContainer onClickOutside={onClickOutside} />}
     </HeaderStyle>
   );
 };
