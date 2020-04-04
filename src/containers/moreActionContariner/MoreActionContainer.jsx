@@ -32,10 +32,10 @@ const menusQuery = {
 const MoreActionContainer = ({ onClickOutside }) => {
   const history = useHistory();
   const { queryString } = useSelector(state => state.todos);
+
   const combineQueryString = useCallback(
     menu => {
       let querys = {};
-
       Object.keys(queryString)
         .filter(query => query !== 'page')
         .forEach(query => {
@@ -53,21 +53,24 @@ const MoreActionContainer = ({ onClickOutside }) => {
     [queryString]
   );
 
-  const onClickMenuItem = useCallback(e => {
-    const {
-      target: {
-        dataset: { menu },
-      },
-    } = e;
+  const onClickMenuItem = useCallback(
+    e => {
+      const {
+        target: {
+          dataset: { menu },
+        },
+      } = e;
 
-    if (!menu) {
-      return;
-    }
+      if (!menu) {
+        return;
+      }
 
-    const string = combineQueryString(menu);
+      const string = combineQueryString(menu);
 
-    history.push(`/page/1?${querystring.stringify(string)}`);
-  }, []);
+      history.push(`/page/1?${querystring.stringify(string)}`);
+    },
+    [queryString]
+  );
 
   return (
     <MoreAction
