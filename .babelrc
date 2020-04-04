@@ -5,18 +5,18 @@
       {
         "targets": {
           "browsers": [
-            "last 2 chrome versions",
-            "not ie <= 11"
+            "last 2 versions","ie 11"
           ]
         },
-        "debug": false
+        "useBuiltIns": "usage",
+        "corejs":3,
+        "shippedProposals": true
       }
     ],
     "@babel/preset-react"
   ],
   "plugins": [
     "@babel/plugin-proposal-class-properties",
-    "@babel/plugin-transform-runtime",
     "react-hot-loader/babel"
   ]
 }
