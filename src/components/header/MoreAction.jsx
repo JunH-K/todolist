@@ -26,11 +26,16 @@ const MoreAction = ({
     </MoreActonContainerStyle>
   );
 };
-
+MoreAction.defaultProps = {
+  children: null,
+};
 MoreAction.propTypes = {
   onClickOutside: PropTypes.func.isRequired,
   onClickMenuItem: PropTypes.func.isRequired,
-  menus: PropTypes.arrayOf(PropTypes.object).isRequired,
+  menus: PropTypes.arrayOf(
+    PropTypes.oneOfType([PropTypes.object, PropTypes.string])
+  ).isRequired,
+  children: PropTypes.node,
 };
 
 export default MoreAction;
