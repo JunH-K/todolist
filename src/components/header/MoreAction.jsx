@@ -1,11 +1,12 @@
 import React, { useCallback, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import querystring from 'querystring';
 import axios from 'axios';
 import { MoreActionStyle, MoreActonContainerStyle } from './Style';
 import { showToast } from '..';
+import { ADD_TODO_REQUEST } from '../../reducers/todos';
 
 const menus = [
   { name: '생성일 오름차순', key: 'createdAsc' },
@@ -31,9 +32,11 @@ const menusQuery = {
 };
 
 const MoreAction = ({ onClickOutside }) => {
+  const dispatch = useDispatch();
   const history = useHistory();
   const { queryString } = useSelector(state => state.todos);
   const download = useRef(null);
+  const restore = useRef(null);
 
   const combineQueryString = useCallback(
     menu => {
@@ -74,6 +77,7 @@ const MoreAction = ({ onClickOutside }) => {
 
   const fetchBackupData = async () => {
     try {
+      showToast('백업중..');
       const backupData = await axios.get('/todos');
       return backupData.data.row;
     } catch (error) {
@@ -91,7 +95,23 @@ const MoreAction = ({ onClickOutside }) => {
     });
   };
 
-  const onClickRestore = () => {};
+  const onClickRestore = () => {
+    restore.current.click();
+  };
+
+  const onChangeHandleFiles = e => {
+    const [file] = e.target.files;
+    if (file) {
+      file.text().then(data => {
+        const backup = JSON.parse(data);
+        showToast('데이터 복원 중...');
+        dispatch({
+          type: ADD_TODO_REQUEST,
+          data: backup,
+        });
+      });
+    }
+  };
 
   return (
     <MoreActonContainerStyle onClick={onClickOutside} data-name="outside">
@@ -108,7 +128,7 @@ const MoreAction = ({ onClickOutside }) => {
         })}
         <a
           id="download"
-          download="backup.json"
+          download="backupTodo.json"
           ref={download}
           style={{ display: 'none' }}
         >
@@ -117,9 +137,22 @@ const MoreAction = ({ onClickOutside }) => {
         <div onClick={onClickBackup} className="menu">
           데이터 백업
         </div>
-        <a>
-          <div className="menu">데이터 복원</div>
-        </a>
+        <input
+          type="file"
+          id="fileElem"
+          multiple
+          accept="application/json"
+          style={{ display: 'none' }}
+          ref={restore}
+          onChange={onChangeHandleFiles}
+        />
+        <div
+          onClick={onClickRestore}
+          className="menu"
+          title="할일이 복원파일로 대체됩니다."
+        >
+          데이터 복원
+        </div>
       </MoreActionStyle>
     </MoreActonContainerStyle>
   );
