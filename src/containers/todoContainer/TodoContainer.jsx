@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
 import { TODO_LIST_REQUEST } from '../../reducers/todos';
-import { Pagination } from '../../components';
 import Container from './Style';
 import WriteContainer from '../writeContainer/WriteContainer';
 import TodoListContainer from '../todoListContainer/TodoListContainer';
 import HeaderContainer from '../headerContainer/HeaderContainer';
+import PaginationContainer from '../paginationContainer/PaginationContainer';
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
@@ -41,7 +41,7 @@ const TodoContainer = () => {
         <WriteContainer />
         <TodoListContainer />
       </Container>
-      <Pagination />
+      <PaginationContainer />
     </>
   );
 };
