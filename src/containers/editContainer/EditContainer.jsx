@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Button, TodoForm } from '../../components';
 import { useDispatch } from 'react-redux';
+import { Button, TodoForm } from '../../components';
 import { attachPrefix, extractFromString } from '../../util/util';
 import { DELETE_TODO_REQUEST, EDIT_TODO_REQUEST } from '../../reducers/todos';
 
