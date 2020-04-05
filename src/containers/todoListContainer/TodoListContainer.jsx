@@ -110,7 +110,10 @@ const TodoListContainer = ({ todoList = [] }) => {
     });
   };
 
-  const onClickEdit = id => () => {
+  const onClickEdit = id => e => {
+    if (e.target.type === 'checkbox') {
+      return;
+    }
     dispatch({ type: EDIT_TODO_INIT });
     setEditId(id);
   };
