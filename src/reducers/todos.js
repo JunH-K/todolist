@@ -5,6 +5,7 @@ export const TODO_LIST_SUCCESS = 'todos/TODO_LIST_SUCCESS';
 export const TODO_LIST_ERROR = 'todos/TODO_LIST_ERROR';
 
 export const ADD_TODO_REQUEST = 'todos/ADD_TODO_REQUEST';
+export const ADD_TODO_SUCCESS = 'todos/ADD_TODO_SUCCESS';
 export const ADD_TODO_ERROR = 'todos/ADD_TODO_ERROR';
 
 export const EDIT_TODO_REQUEST = 'todos/EDIT_TODO_REQUEST';
@@ -20,6 +21,8 @@ const defaultState = {
   isLoading: false,
   pageInfo: {},
   queryString: {},
+  addTodo: '',
+  addTodoError: [],
 };
 
 const todos = handleActions(
@@ -43,6 +46,27 @@ const todos = handleActions(
     [TODO_LIST_ERROR]: state => {
       return {
         ...state,
+        isLoading: false,
+      };
+    },
+    [ADD_TODO_REQUEST]: state => {
+      return {
+        ...state,
+        addTodo: 'request',
+        isLoading: true,
+      };
+    },
+    [ADD_TODO_SUCCESS]: state => {
+      return {
+        ...state,
+        addTodo: 'success',
+        isLoading: false,
+      };
+    },
+    [ADD_TODO_ERROR]: (state, action) => {
+      return {
+        ...state,
+        addTodoError: action.error.response.data,
         isLoading: false,
       };
     },

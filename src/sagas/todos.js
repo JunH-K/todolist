@@ -11,6 +11,7 @@ import {
   EDIT_TODO_ERROR,
   EDIT_TODO_SUCCESS,
   DELETE_TODO_REQUEST,
+  ADD_TODO_SUCCESS,
 } from '../reducers/todos';
 
 function todoListAPI(data) {
@@ -49,8 +50,8 @@ function* addTodo(action) {
     const result = yield call(AddTodoAPI, action.data);
 
     yield put({
-      type: TODO_LIST_REQUEST,
-      data: { page: 1 },
+      type: ADD_TODO_SUCCESS,
+      data: result,
     });
   } catch (e) {
     console.error(e);
