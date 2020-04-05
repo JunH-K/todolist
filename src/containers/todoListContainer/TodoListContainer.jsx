@@ -133,7 +133,12 @@ const TodoListContainer = ({ todoList = [] }) => {
     }
 
     return (
-      <TodoStyle key={todo.id + todo.createdAt} done={todo.done}>
+      <TodoStyle
+        key={todo.id + todo.createdAt}
+        done={todo.done}
+        onClick={onClickEdit(todo.id)}
+        title="클릭하여 수정하세요."
+      >
         <CheckBox
           type="checkbox"
           checked={todo.done}
@@ -142,13 +147,7 @@ const TodoListContainer = ({ todoList = [] }) => {
         <span data-id="1" className="todo-id">
           @{todo.id}
         </span>
-        <p
-          className="content"
-          title="클릭하여 수정 or 삭제"
-          onClick={onClickEdit(todo.id)}
-        >
-          {todo.content}
-        </p>
+        <p className="content">{todo.content}</p>
         <div className="ref-id">
           <p>
             {Array.isArray(todo.refTodo) && attachPrefix(todo.refTodo, '@')}
