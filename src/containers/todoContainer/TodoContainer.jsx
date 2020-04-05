@@ -2,10 +2,11 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useParams } from 'react-router-dom';
 import { TODO_LIST_REQUEST } from '../../reducers/todos';
-import { Header, Pagination } from '../../components';
+import { Pagination } from '../../components';
 import Container from './Style';
 import WriteContainer from '../writeContainer/WriteContainer';
 import TodoListContainer from '../todoListContainer/TodoListContainer';
+import HeaderContainer from '../headerContainer/HeaderContainer';
 
 const useQuery = () => {
   return new URLSearchParams(useLocation().search);
@@ -37,7 +38,7 @@ const TodoContainer = () => {
   return (
     <>
       <Container>
-        <Header />
+        <HeaderContainer />
         <WriteContainer />
         <TodoListContainer todoList={todoList} />
       </Container>
