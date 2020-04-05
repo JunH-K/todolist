@@ -45,6 +45,11 @@ npm install
 npm run dev
 ```
 
+* 빌드 (dist 디렉토리에 빌드파일 생성)
+```shell script
+npm run build
+```
+
 > 기능 요구 사항
 
 * todo 항목추가
