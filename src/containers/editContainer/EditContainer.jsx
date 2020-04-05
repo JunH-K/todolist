@@ -18,12 +18,15 @@ const EditContainer = ({
   const dispatch = useDispatch();
   const [todoValue, setTodoText] = useState(preTodoValue);
   const [refValue, setTodoRefId] = useState(attachPrefix(preRefValue, '@'));
-  const { editTodoStatus, editTodoError } = useSelector(state => state.todos);
+  const { editTodoStatus, editTodoError, pageInfo } = useSelector(
+    state => state.todos
+  );
 
   useEffect(() => {
+    const { curPage: page = 1 } = pageInfo;
     if (editTodoStatus === 'success') {
       showToast('수정 완료!');
-      dispatch({ type: TODO_LIST_REQUEST, data: { page: 1 } });
+      dispatch({ type: TODO_LIST_REQUEST, data: { page } });
     }
   }, [editTodoStatus]);
 
