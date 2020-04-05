@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import querystring from 'querystring';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Button, showToast, TodoForm } from '../../components';
@@ -16,22 +17,42 @@ const EditContainer = ({
   const dispatch = useDispatch();
   const [todoValue, setTodoText] = useState(preTodoValue);
   const [refValue, setTodoRefId] = useState(attachPrefix(preRefValue, '@'));
-  const { editTodoStatus, editTodoError, deleteStatus, pageInfo } = useSelector(
-    state => state.todos
-  );
+  const {
+    editTodoStatus,
+    editTodoError,
+    deleteStatus,
+    pageInfo,
+    queryString,
+  } = useSelector(state => state.todos);
   const { curPage: page = 1 } = pageInfo;
+
+  const createQueryString = query => {
+    const querys = Object.keys(query).reduce((queryObj, curKey) => {
+      if (curKey !== 'page' && query[curKey]) {
+        return {
+          ...queryObj,
+          [curKey]: query[curKey],
+        };
+      }
+      return queryObj;
+    }, {});
+
+    return querystring.stringify(querys);
+  };
+
+  const query = createQueryString(queryString);
 
   useEffect(() => {
     if (deleteStatus === 'success') {
       showToast('삭제 완료!');
-      history.replace(`/page/${page}`);
+      history.replace(`/page/${page}?${query}`);
     }
   }, [deleteStatus]);
 
   useEffect(() => {
     if (editTodoStatus === 'success') {
       showToast('수정 완료!');
-      history.replace(`/page/${page}`);
+      history.replace(`/page/${page}?${query}`);
     }
   }, [editTodoStatus]);
 
