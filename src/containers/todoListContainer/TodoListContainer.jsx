@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { attachPrefix, getMillisecondsToDate } from '../../util/util';
 import EditContainer from '../editContainer/EditContainer';
 import { EDIT_TODO_INIT, EDIT_TODO_REQUEST } from '../../reducers/todos';
@@ -53,9 +53,10 @@ const TodoStyle = styled.div`
   }
 `;
 
-const TodoListContainer = ({ todoList = [] }) => {
+const TodoListContainer = () => {
   const dispatch = useDispatch();
   const [editId, setEditId] = useState(-1);
+  const { todoList = [] } = useSelector(state => state.todos);
   const noEditing = useRef(-1);
 
   useEffect(() => {
