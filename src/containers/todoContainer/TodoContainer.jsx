@@ -25,7 +25,6 @@ const TodoContainer = () => {
   const { page = 1 } = useParams();
   const location = useLocation();
   const dispatch = useDispatch();
-  const { pageInfo } = useSelector(state => state.todos);
   const queryStrings = {
     page,
     ...getQuery(['searchText', 'sort', 'order', 'done', 'searchId']),
@@ -42,7 +41,7 @@ const TodoContainer = () => {
         <WriteContainer />
         <TodoListContainer />
       </Container>
-      <Pagination pageInfo={pageInfo} />
+      <Pagination />
     </>
   );
 };

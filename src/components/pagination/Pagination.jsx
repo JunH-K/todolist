@@ -1,16 +1,13 @@
 import React, { useCallback } from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import querystring from 'querystring';
 import PaginationStyle from './Style';
 
-const Pagination = props => {
-  const {
-    pageInfo: { pageCount = [], totalPage, isPrePage, isNextPage },
-  } = props;
-
+const Pagination = () => {
   const { queryString: preQueryString } = useSelector(state => state.todos);
+  const { pageInfo } = useSelector(state => state.todos);
+  const { pageCount = [], totalPage, isPrePage, isNextPage } = pageInfo;
   const { page, ...rest } = preQueryString;
   const curPage = parseInt(page, 10);
 
@@ -64,16 +61,6 @@ const Pagination = props => {
       )}
     </PaginationStyle>
   );
-};
-
-Pagination.defaultProps = { pageInfo: {} };
-Pagination.propTypes = {
-  pageInfo: PropTypes.shape({
-    pageCount: PropTypes.arrayOf(PropTypes.number),
-    isPrePage: PropTypes.bool,
-    isNextPage: PropTypes.bool,
-    totalPage: PropTypes.number,
-  }),
 };
 
 export default Pagination;
