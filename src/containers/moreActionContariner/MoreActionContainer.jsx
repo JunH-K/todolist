@@ -5,29 +5,7 @@ import { useHistory } from 'react-router-dom';
 import querystring from 'querystring';
 import { MoreAction } from '../../components';
 import DataManagerContainer from '../dataManagerContainer/DataManagerContainer';
-
-const menus = [
-  { name: '생성일 오름차순', key: 'createdAsc' },
-  { name: '생성일 내림차순', key: 'createdDesc' },
-  '',
-  { name: '수정일 오름차순', key: 'updatedAsc' },
-  { name: '수정일 내림차순', key: 'updatedDesc' },
-  '',
-  { name: '전체목록 표시', key: 'all' },
-  { name: '완료목록 표시', key: 'done' },
-  { name: '미완료목록 표시', key: 'undone' },
-  '',
-];
-
-const menusQuery = {
-  createdAsc: { sort: 'createdAt', order: 'asc' },
-  createdDesc: { sort: 'createdAt', order: 'desc' },
-  updatedAsc: { sort: 'updateAt', order: 'asc' },
-  updatedDesc: { sort: 'updateAt', order: 'desc' },
-  all: { done: '' },
-  done: { done: true },
-  undone: { done: false },
-};
+import { MENUS, MENUS_QUERY } from './Constant';
 
 const MoreActionContainer = ({ onClickOutside }) => {
   const history = useHistory();
@@ -46,7 +24,7 @@ const MoreActionContainer = ({ onClickOutside }) => {
 
       querys = {
         ...querys,
-        ...menusQuery[menu],
+        ...MENUS_QUERY[menu],
       };
       return querys;
     },
@@ -74,7 +52,7 @@ const MoreActionContainer = ({ onClickOutside }) => {
 
   return (
     <MoreAction
-      menus={menus}
+      menus={MENUS}
       onClickMenuItem={onClickMenuItem}
       onClickOutside={onClickOutside}
     >
