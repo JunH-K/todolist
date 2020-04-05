@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import querystring from 'querystring';
-import MoreAction from '../../components/header/MoreAction';
+import { MoreAction } from '../../components';
 import DataManagerContainer from '../dataManagerContainer/DataManagerContainer';
 
 const menus = [
