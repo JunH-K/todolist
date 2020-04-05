@@ -20,8 +20,6 @@ const TodoListContainer = () => {
       if (curPage) {
         return history.replace(`/page/${curPage}`);
       }
-
-      showToast('Todo 를 생성하세요!');
     }
 
     setEditId(noEditing.current);
