@@ -69,16 +69,20 @@ npm run dev
 * 검색
     * todo 내용검색
 
-> 타겟 브라우저 및 테스트 브라우저
+> target browser
+
+* chrome last 2 version
+
+> test browser
 
 * chrome last 2 version
 * ie11
-* samsung internet
+* samsung internet 11.1.2.2(mobile)
 
 > Issue
 
-* ie11 복원기능불가
-* samsung internet 복원기능불가
+* ie11 백업, 복원 기능불가
+* samsung internet 백업, 복원 기능불가
 
 
 
