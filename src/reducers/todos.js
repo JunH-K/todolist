@@ -21,7 +21,7 @@ const defaultState = {
   isLoading: false,
   pageInfo: {},
   queryString: {},
-  addTodo: '',
+  addTodoStatus: '',
   addTodoError: [],
 };
 
@@ -52,14 +52,14 @@ const todos = handleActions(
     [ADD_TODO_REQUEST]: state => {
       return {
         ...state,
-        addTodo: 'request',
+        addTodoStatus: 'request',
         isLoading: true,
       };
     },
     [ADD_TODO_SUCCESS]: state => {
       return {
         ...state,
-        addTodo: 'success',
+        addTodoStatus: 'success',
         isLoading: false,
       };
     },

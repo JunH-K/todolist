@@ -8,16 +8,16 @@ const WriteContainer = () => {
   const dispatch = useDispatch();
   const [todoValue, setTodoValue] = useState('');
   const [refValue, setRefValue] = useState('');
-  const { addTodo, addTodoError } = useSelector(state => state.todos);
+  const { addTodoStatus, addTodoError } = useSelector(state => state.todos);
 
   useEffect(() => {
-    if (addTodo === 'success') {
+    if (addTodoStatus === 'success') {
       showToast('할일 추가 완료!');
       setTodoValue('');
       setRefValue('');
       dispatch({ type: TODO_LIST_REQUEST, data: { page: 1 } });
     }
-  }, [addTodo]);
+  }, [addTodoStatus]);
 
   useEffect(() => {
     const { refId = [] } = addTodoError;
