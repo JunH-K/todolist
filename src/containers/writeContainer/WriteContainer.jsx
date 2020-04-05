@@ -1,13 +1,30 @@
-import React, { useCallback, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { TodoForm } from '../../components';
-import { ADD_TODO_REQUEST } from '../../reducers/todos';
-import { extractFromString } from '../../util/util';
+import React, { useCallback, useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { showToast, TodoForm } from '../../components';
+import { ADD_TODO_REQUEST, TODO_LIST_REQUEST } from '../../reducers/todos';
+import { attachPrefix, extractFromString } from '../../util/util';
 
 const WriteContainer = () => {
   const dispatch = useDispatch();
   const [todoValue, setTodoValue] = useState('');
   const [refValue, setRefValue] = useState('');
+  const { addTodo, addTodoError } = useSelector(state => state.todos);
+
+  useEffect(() => {
+    if (addTodo === 'success') {
+      showToast('할일 추가 완료!');
+      setTodoValue('');
+      setRefValue('');
+      dispatch({ type: TODO_LIST_REQUEST, data: { page: 1 } });
+    }
+  }, [addTodo]);
+
+  useEffect(() => {
+    const { refId = [] } = addTodoError;
+    if (refId.length) {
+      showToast(`${attachPrefix(refId, '@')} 존재하지 않는 Todo 입니다`);
+    }
+  }, [addTodoError]);
 
   const onChangeTodo = useCallback(e => {
     setTodoValue(e.target.value);
@@ -18,13 +35,11 @@ const WriteContainer = () => {
   }, []);
 
   const onClickAddTodo = useCallback(() => {
-    setTodoValue('');
-    setRefValue('');
     dispatch({
       type: ADD_TODO_REQUEST,
       data: {
         content: todoValue,
-        refId: extractFromString(refValue, '@'),
+        refTodo: extractFromString(refValue, '@'),
         done: false,
       },
     });
