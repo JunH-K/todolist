@@ -18,9 +18,12 @@ const TodoListContainer = () => {
     if (!todoList.length) {
       const { curPage } = pageInfo;
       if (curPage) {
-        history.replace(`/page/${curPage}`);
+        return history.replace(`/page/${curPage}`);
       }
+
+      showToast('Todo 를 생성하세요!');
     }
+
     setEditId(noEditing.current);
   }, [todoList]);
 
