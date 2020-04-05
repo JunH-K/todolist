@@ -10,17 +10,31 @@ const HeaderContainer = () => {
   const [isMoreMenu, setIsMoreMenu] = useState(false);
   const timer = useRef(0);
 
+  const createSearchQuery = value => {
+    let query = {};
+    if (value) {
+      const idIndex = value.indexOf('@');
+      if (idIndex > -1) {
+        const id = value.slice(idIndex + 1, idIndex + 2);
+        const strToNum = parseInt(id, 10);
+        if (!Number.isNaN(strToNum) && typeof strToNum === 'number') {
+          query = {
+            searchId: strToNum,
+          };
+        }
+        return query;
+      }
+      return {
+        searchText: value,
+      };
+    }
+  };
   const request = useCallback(value => {
     if (timer.current) {
       clearTimeout(timer.current);
     }
     timer.current = setTimeout(() => {
-      let query = {};
-      if (value) {
-        query = {
-          searchText: value,
-        };
-      }
+      const query = createSearchQuery(value);
 
       history.push(`?${querystring.stringify(query)}`);
     }, 500);
