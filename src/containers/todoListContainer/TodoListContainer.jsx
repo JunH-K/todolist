@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { TodoStyle, CheckBox } from './Style';
 import { attachPrefix, getMillisecondsToDate } from '../../util/util';
 import EditContainer from '../editContainer/EditContainer';
@@ -7,12 +8,19 @@ import { STATUS_INIT, EDIT_TODO_REQUEST } from '../../reducers/todos';
 import { showToast } from '../../components';
 
 const TodoListContainer = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const [editId, setEditId] = useState(-1);
-  const { todoList = [] } = useSelector(state => state.todos);
+  const { todoList = [], pageInfo } = useSelector(state => state.todos);
   const noEditing = useRef(-1);
 
   useEffect(() => {
+    if (!todoList.length) {
+      const { curPage } = pageInfo;
+      if (curPage) {
+        history.replace(`/page/${curPage}`);
+      }
+    }
     setEditId(noEditing.current);
   }, [todoList]);
 
