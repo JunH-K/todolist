@@ -68,6 +68,7 @@ npm run dev
         * 기존 todo 데이터를 대체
 * 검색
     * todo 내용검색
+    * id 검색(ex:@1)
 
 > target browser
 
