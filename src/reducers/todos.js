@@ -8,7 +8,6 @@ export const ADD_TODO_REQUEST = 'todos/ADD_TODO_REQUEST';
 export const ADD_TODO_SUCCESS = 'todos/ADD_TODO_SUCCESS';
 export const ADD_TODO_ERROR = 'todos/ADD_TODO_ERROR';
 
-export const EDIT_TODO_INIT = 'todos/EDIT_TODO_INIT';
 export const EDIT_TODO_REQUEST = 'todos/EDIT_TODO_REQUEST';
 export const EDIT_TODO_SUCCESS = 'todos/EDIT_TODO_SUCCESS';
 export const EDIT_TODO_ERROR = 'todos/EDIT_TODO_ERROR';
@@ -16,6 +15,8 @@ export const EDIT_TODO_ERROR = 'todos/EDIT_TODO_ERROR';
 export const DELETE_TODO_REQUEST = 'todos/DELETE_TODO_REQUEST';
 export const DELETE_TODO_SUCCESS = 'todos/DELETE_TODO_SUCCESS';
 export const DELETE_TODO_ERROR = 'todos/DELETE_TODO_ERROR';
+
+export const STATUS_INIT = 'todos/STATUS_INIT';
 
 const defaultState = {
   todoList: [],
@@ -26,6 +27,7 @@ const defaultState = {
   addTodoError: [],
   editTodoStatus: '',
   editTodoError: [],
+  deleteStatus: '',
 };
 
 const todos = handleActions(
@@ -73,11 +75,14 @@ const todos = handleActions(
         isLoading: false,
       };
     },
-    [EDIT_TODO_INIT]: state => {
+    [STATUS_INIT]: state => {
       return {
         ...state,
+        addTodoStatus: '',
+        addTodoError: [],
         editTodoStatus: '',
         editTodoError: [],
+        deleteStatus: '',
       };
     },
 
@@ -115,13 +120,15 @@ const todos = handleActions(
       };
     },
     [DELETE_TODO_REQUEST]: (state, action) => {
-      const { id } = action.data;
-      const nextTodoList = state.todoList.filter(todo => {
-        return todo.id !== id;
-      });
       return {
         ...state,
-        todoList: nextTodoList,
+        deleteStatus: 'request',
+      };
+    },
+    [DELETE_TODO_SUCCESS]: state => {
+      return {
+        ...state,
+        deleteStatus: 'success',
       };
     },
     [DELETE_TODO_ERROR]: state => {
