@@ -5,7 +5,7 @@ const Toast = styled.div`
   display: none;
   position: absolute;
   left: 50%;
-  top: 20%;
+  top: 30%;
   padding: 15px;
   width: 300px;
   max-height: 250px;
