@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { TodoFormStyle } from './Style';
 import { Button, InputText } from '../index';
 import { isRefIdValid } from '../../util/util';
@@ -50,6 +51,26 @@ const TodoForm = ({
       </div>
     </TodoFormStyle>
   );
+};
+
+TodoForm.defaultProps = {
+  todoValue: '',
+  refValue: '',
+  children: null,
+  onChangeTodo: undefined,
+  onChangeRefId: undefined,
+  onClickAddTodo: undefined,
+  maxValue: 100,
+};
+TodoForm.propTypes = {
+  todoValue: PropTypes.string,
+  refValue: PropTypes.string,
+  doneText: PropTypes.string.isRequired,
+  children: PropTypes.node,
+  onChangeTodo: PropTypes.func,
+  onChangeRefId: PropTypes.func,
+  onClickAddTodo: PropTypes.func,
+  maxValue: PropTypes.number,
 };
 
 export default TodoForm;

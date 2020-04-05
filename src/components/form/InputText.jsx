@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { InputTextStyle } from './Style';
 
 const InputText = ({
   className,
   placeholder = '',
   onChange,
-  defaultValue,
   validationFunc,
   isValidCallback,
   ...rest
@@ -39,11 +39,25 @@ const InputText = ({
       className={className}
       placeholder={placeholder}
       onChange={onChangeInput}
-      defaultValue={defaultValue}
       isError={isError}
       {...rest}
     />
   );
+};
+
+InputText.defaultProps = {
+  className: '',
+  placeholder: '',
+  onChange: undefined,
+  validationFunc: undefined,
+  isValidCallback: undefined,
+};
+InputText.propTypes = {
+  className: PropTypes.string,
+  placeholder: PropTypes.string,
+  onChange: PropTypes.func,
+  validationFunc: PropTypes.func,
+  isValidCallback: PropTypes.func,
 };
 
 export default InputText;
