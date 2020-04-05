@@ -20,9 +20,9 @@ const WriteContainer = () => {
   }, [addTodoStatus]);
 
   useEffect(() => {
-    const { refId = [] } = addTodoError;
-    if (refId.length) {
-      showToast(`${attachPrefix(refId, '@')} 존재하지 않는 Todo 입니다`);
+    const { refTodo = [] } = addTodoError;
+    if (refTodo.length) {
+      showToast(`${attachPrefix(refTodo, '@')} 존재하지 않는 Todo 입니다`);
     }
   }, [addTodoError]);
 
