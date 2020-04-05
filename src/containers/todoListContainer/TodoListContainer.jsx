@@ -18,9 +18,10 @@ const TodoListContainer = () => {
     if (!todoList.length) {
       const { curPage } = pageInfo;
       if (curPage) {
-        history.replace(`/page/${curPage}`);
+        return history.replace(`/page/${curPage}`);
       }
     }
+
     setEditId(noEditing.current);
   }, [todoList]);
 

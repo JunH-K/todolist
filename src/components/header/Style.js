@@ -37,7 +37,7 @@ const MoreActionStyle = styled.div`
   position: absolute;
   padding: 5px;
   top: 40px;
-  right: 1%;
+  right: 0;
   border-radius: 1px;
   border: 1px solid #6e6e6e;
   background: #f4f4f4;
