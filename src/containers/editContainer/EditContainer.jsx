@@ -87,10 +87,13 @@ const EditContainer = ({
   );
 };
 
+EditContainer.defaultProps = {
+  refValue: [],
+};
 EditContainer.propTypes = {
   id: PropTypes.number.isRequired,
   todoValue: PropTypes.string.isRequired,
-  refValue: PropTypes.string.isRequired,
+  refValue: PropTypes.arrayOf(PropTypes.string),
   onClickCancel: PropTypes.func.isRequired,
 };
 
