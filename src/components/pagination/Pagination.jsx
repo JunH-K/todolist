@@ -1,30 +1,16 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import querystring from 'querystring';
+import PropTypes from 'prop-types';
 import PaginationStyle from './Style';
 
-const Pagination = () => {
-  const { queryString: preQueryString } = useSelector(state => state.todos);
-  const { pageInfo } = useSelector(state => state.todos);
-  const { pageCount = [], totalPage, isPrePage, isNextPage } = pageInfo;
-  const { page, ...rest } = preQueryString;
-  const curPage = parseInt(page, 10);
-
-  const createQueryString = useCallback(query => {
-    const nextQueryString = {};
-    Object.keys(query).forEach(key => {
-      if (query[key]) {
-        nextQueryString[key] = query[key];
-      }
-    });
-
-    const resultQueryString = querystring.stringify(nextQueryString);
-
-    return resultQueryString !== '' ? `?${resultQueryString}` : '';
-  }, []);
-  const queryString = createQueryString(rest);
-
+const Pagination = ({
+  totalPage,
+  curPage,
+  queryString,
+  isPrePage,
+  pageCount = [],
+  isNextPage,
+}) => {
   return (
     <PaginationStyle className="pagination">
       {totalPage && curPage !== 1 ? (
@@ -61,6 +47,22 @@ const Pagination = () => {
       )}
     </PaginationStyle>
   );
+};
+Pagination.defaultProps = {
+  totalPage: 0,
+  curPage: 0,
+  queryString: '',
+  isPrePage: false,
+  pageCount: [],
+  isNextPage: false,
+};
+Pagination.propTypes = {
+  totalPage: PropTypes.number,
+  curPage: PropTypes.number,
+  queryString: PropTypes.string,
+  isPrePage: PropTypes.bool,
+  pageCount: PropTypes.arrayOf(PropTypes.number),
+  isNextPage: PropTypes.bool,
 };
 
 export default Pagination;
