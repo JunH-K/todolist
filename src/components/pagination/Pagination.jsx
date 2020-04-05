@@ -69,7 +69,7 @@ const Pagination = props => {
 Pagination.defaultProps = { pageInfo: {} };
 Pagination.propTypes = {
   pageInfo: PropTypes.shape({
-    pageCount: PropTypes.arrayOf(PropTypes.array),
+    pageCount: PropTypes.arrayOf(PropTypes.number),
     isPrePage: PropTypes.bool,
     isNextPage: PropTypes.bool,
     totalPage: PropTypes.number,
