@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { TodoStyle, CheckBox } from './Style';
 import { attachPrefix, getMillisecondsToDate } from '../../util/util';
 import EditContainer from '../editContainer/EditContainer';
-import { EDIT_TODO_INIT, EDIT_TODO_REQUEST } from '../../reducers/todos';
+import { STATUS_INIT, EDIT_TODO_REQUEST } from '../../reducers/todos';
 import { showToast } from '../../components';
 
 const TodoListContainer = () => {
@@ -68,7 +68,7 @@ const TodoListContainer = () => {
     if (e.target.type === 'checkbox') {
       return;
     }
-    dispatch({ type: EDIT_TODO_INIT });
+    dispatch({ type: STATUS_INIT });
     setEditId(id);
   };
 

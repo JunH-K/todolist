@@ -1,11 +1,13 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { showToast, TodoForm } from '../../components';
-import { ADD_TODO_REQUEST, TODO_LIST_REQUEST } from '../../reducers/todos';
+import { ADD_TODO_REQUEST } from '../../reducers/todos';
 import { attachPrefix, extractFromString } from '../../util/util';
 
 const WriteContainer = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [todoValue, setTodoValue] = useState('');
   const [refValue, setRefValue] = useState('');
   const { addTodoStatus, addTodoError } = useSelector(state => state.todos);
@@ -15,7 +17,7 @@ const WriteContainer = () => {
       showToast('할일 추가 완료!');
       setTodoValue('');
       setRefValue('');
-      dispatch({ type: TODO_LIST_REQUEST, data: { page: 1 } });
+      history.replace(`/page/1`);
     }
   }, [addTodoStatus]);
 

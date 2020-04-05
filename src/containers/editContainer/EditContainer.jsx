@@ -1,13 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import { Button, showToast, TodoForm } from '../../components';
 import { attachPrefix, extractFromString } from '../../util/util';
-import {
-  DELETE_TODO_REQUEST,
-  EDIT_TODO_REQUEST,
-  TODO_LIST_REQUEST,
-} from '../../reducers/todos';
+import { DELETE_TODO_REQUEST, EDIT_TODO_REQUEST } from '../../reducers/todos';
 
 const EditContainer = ({
   id,
@@ -15,18 +12,26 @@ const EditContainer = ({
   refValue: preRefValue,
   onClickCancel,
 }) => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const [todoValue, setTodoText] = useState(preTodoValue);
   const [refValue, setTodoRefId] = useState(attachPrefix(preRefValue, '@'));
-  const { editTodoStatus, editTodoError, pageInfo } = useSelector(
+  const { editTodoStatus, editTodoError, deleteStatus, pageInfo } = useSelector(
     state => state.todos
   );
+  const { curPage: page = 1 } = pageInfo;
 
   useEffect(() => {
-    const { curPage: page = 1 } = pageInfo;
+    if (deleteStatus === 'success') {
+      showToast('삭제 완료!');
+      history.replace(`/page/${page}`);
+    }
+  }, [deleteStatus]);
+
+  useEffect(() => {
     if (editTodoStatus === 'success') {
       showToast('수정 완료!');
-      dispatch({ type: TODO_LIST_REQUEST, data: { page } });
+      history.replace(`/page/${page}`);
     }
   }, [editTodoStatus]);
 
