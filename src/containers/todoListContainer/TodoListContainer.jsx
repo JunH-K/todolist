@@ -156,10 +156,10 @@ const TodoListContainer = ({ todoList = [] }) => {
         </div>
         <div className="date">
           <span className="create-date">
-            생성 : {getMillisecondsToDate(todo.createdAt)}
+            작성일자 : {getMillisecondsToDate(todo.createdAt)}
           </span>
           <span className="update-date">
-            수정 : {getMillisecondsToDate(todo.updateAt)}
+            수정일자 : {getMillisecondsToDate(todo.updateAt)}
           </span>
         </div>
       </TodoStyle>
