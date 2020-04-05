@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Style = styled.div`
   ${({ isLoading }) => {
@@ -36,8 +37,9 @@ const Style = styled.div`
 `;
 
 const Loading = () => {
+  const { isLoading } = useSelector(state => state.todos);
   return (
-    <Style className="loading" isLoading={false}>
+    <Style className="loading" isLoading={isLoading}>
       <div className="ball" />
     </Style>
   );

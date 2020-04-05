@@ -1,16 +1,19 @@
-import { all, fork, put, takeLatest, delay, call } from 'redux-saga/effects';
+import { all, call, fork, put, takeLatest } from 'redux-saga/effects';
 import querystring from 'querystring';
 import axios from 'axios';
 import {
+  ADD_TODO_ERROR,
+  ADD_TODO_REQUEST,
+  ADD_TODO_SUCCESS,
+  DELETE_TODO_ERROR,
+  DELETE_TODO_REQUEST,
+  DELETE_TODO_SUCCESS,
+  EDIT_TODO_ERROR,
+  EDIT_TODO_REQUEST,
+  EDIT_TODO_SUCCESS,
+  TODO_LIST_ERROR,
   TODO_LIST_REQUEST,
   TODO_LIST_SUCCESS,
-  TODO_LIST_ERROR,
-  ADD_TODO_REQUEST,
-  ADD_TODO_ERROR,
-  EDIT_TODO_REQUEST,
-  EDIT_TODO_ERROR,
-  EDIT_TODO_SUCCESS,
-  DELETE_TODO_REQUEST,
 } from '../reducers/todos';
 
 function todoListAPI(data) {
@@ -49,8 +52,8 @@ function* addTodo(action) {
     const result = yield call(AddTodoAPI, action.data);
 
     yield put({
-      type: TODO_LIST_REQUEST,
-      data: { page: 1 },
+      type: ADD_TODO_SUCCESS,
+      data: result,
     });
   } catch (e) {
     console.error(e);
@@ -99,10 +102,14 @@ function deleteTodoAPI(data) {
 function* deleteTodo(action) {
   try {
     const result = yield call(deleteTodoAPI, action.data);
+    yield put({
+      type: DELETE_TODO_SUCCESS,
+      data: result,
+    });
   } catch (e) {
     console.error(e);
     yield put({
-      type: EDIT_TODO_ERROR,
+      type: DELETE_TODO_ERROR,
       error: e,
     });
   }

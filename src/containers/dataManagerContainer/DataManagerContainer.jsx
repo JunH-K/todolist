@@ -11,8 +11,8 @@ const DataManagerContainer = () => {
 
   const fetchBackupData = useCallback(async () => {
     try {
-      showToast('백업중..');
       const backupData = await axios.get('/todos');
+      showToast('백업중..');
       return backupData.data.row;
     } catch (error) {
       console.error(error);

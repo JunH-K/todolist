@@ -1,64 +1,26 @@
 import React, { useState, useEffect, useRef } from 'react';
-import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { TodoStyle, CheckBox } from './Style';
 import { attachPrefix, getMillisecondsToDate } from '../../util/util';
 import EditContainer from '../editContainer/EditContainer';
-import { EDIT_TODO_REQUEST } from '../../reducers/todos';
+import { STATUS_INIT, EDIT_TODO_REQUEST } from '../../reducers/todos';
 import { showToast } from '../../components';
 
-const CheckBox = styled.input.attrs({
-  type: 'checkbox',
-})`
-  -ms-transform: scale(1.5); /* IE */
-  -moz-transform: scale(1.5); /* FF */
-  -webkit-transform: scale(1.5); /* Safari and Chrome */
-  -o-transform: scale(1.5); /* Opera */
-  transform: scale(1.5);
-`;
-
-const TodoStyle = styled.div`
-  border-bottom: 1px solid #f0f0f0;
-  line-height: 30px;
-  padding-left: 10px;
-
-  .todo-id {
-    font-weight: bold;
-    margin-left: 5px;
-    margin-right: 5px;
-  }
-
-  .ref-id {
-    color: #7a7a7a;
-    font-size: 13px;
-  }
-
-  .content {
-    ${({ done }) => {
-      if (done) {
-        return 'text-decoration: line-through;color: #b6b6b6;';
-      }
-      return '';
-    }}
-  }
-
-  .date {
-    left: 10px;
-    font-size: 11px;
-    padding-left: 20px;
-    color: #7a7a7a;
-  }
-
-  .date .create-date {
-    margin-right: 5px;
-  }
-`;
-
-const TodoListContainer = ({ todoList = [] }) => {
+const TodoListContainer = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
   const [editId, setEditId] = useState(-1);
+  const { todoList = [], pageInfo } = useSelector(state => state.todos);
   const noEditing = useRef(-1);
 
   useEffect(() => {
+    if (!todoList.length) {
+      const { curPage } = pageInfo;
+      if (curPage) {
+        history.replace(`/page/${curPage}`);
+      }
+    }
     setEditId(noEditing.current);
   }, [todoList]);
 
@@ -66,13 +28,13 @@ const TodoListContainer = ({ todoList = [] }) => {
     const [todo] = todoList.filter(todo => {
       return todo.id === id;
     });
-    const { refId = [] } = todo;
+    const { refTodo = [] } = todo;
 
-    const refTodo = todoList.filter(todo => {
-      return refId.includes(todo.id.toString());
+    const refTodoFilter = todoList.filter(todo => {
+      return refTodo.includes(todo.id.toString());
     });
 
-    return refTodo.reduce(
+    return refTodoFilter.reduce(
       (preValue, curValue) => {
         if (curValue.done) {
           return {
@@ -110,7 +72,11 @@ const TodoListContainer = ({ todoList = [] }) => {
     });
   };
 
-  const onClickEdit = id => () => {
+  const onClickEdit = id => e => {
+    if (e.target.type === 'checkbox') {
+      return;
+    }
+    dispatch({ type: STATUS_INIT });
     setEditId(id);
   };
 
@@ -123,7 +89,7 @@ const TodoListContainer = ({ todoList = [] }) => {
       return (
         <EditContainer
           todoValue={todo.content}
-          refValue={todo.refId}
+          refValue={todo.refTodo}
           id={todo.id}
           key={todo.id + todo.createdAt}
           onClickCancel={onClickCancel}
@@ -132,7 +98,12 @@ const TodoListContainer = ({ todoList = [] }) => {
     }
 
     return (
-      <TodoStyle key={todo.id + todo.createdAt} done={todo.done}>
+      <TodoStyle
+        key={todo.id + todo.createdAt}
+        done={todo.done}
+        onClick={onClickEdit(todo.id)}
+        title="클릭하여 수정하세요."
+      >
         <CheckBox
           type="checkbox"
           checked={todo.done}
@@ -141,22 +112,18 @@ const TodoListContainer = ({ todoList = [] }) => {
         <span data-id="1" className="todo-id">
           @{todo.id}
         </span>
-        <p
-          className="content"
-          title="클릭하여 수정 or 삭제"
-          onClick={onClickEdit(todo.id)}
-        >
-          {todo.content}
-        </p>
+        <p className="content">{todo.content}</p>
         <div className="ref-id">
-          <p>{Array.isArray(todo.refId) && attachPrefix(todo.refId, '@')}</p>
+          <p>
+            {Array.isArray(todo.refTodo) && attachPrefix(todo.refTodo, '@')}
+          </p>
         </div>
         <div className="date">
           <span className="create-date">
-            생성 : {getMillisecondsToDate(todo.createdAt)}
+            작성일자 : {getMillisecondsToDate(todo.createdAt)}
           </span>
           <span className="update-date">
-            수정 : {getMillisecondsToDate(todo.updateAt)}
+            수정일자 : {getMillisecondsToDate(todo.updateAt)}
           </span>
         </div>
       </TodoStyle>
