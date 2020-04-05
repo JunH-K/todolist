@@ -8,6 +8,7 @@ export const ADD_TODO_REQUEST = 'todos/ADD_TODO_REQUEST';
 export const ADD_TODO_SUCCESS = 'todos/ADD_TODO_SUCCESS';
 export const ADD_TODO_ERROR = 'todos/ADD_TODO_ERROR';
 
+export const EDIT_TODO_INIT = 'todos/EDIT_TODO_INIT';
 export const EDIT_TODO_REQUEST = 'todos/EDIT_TODO_REQUEST';
 export const EDIT_TODO_SUCCESS = 'todos/EDIT_TODO_SUCCESS';
 export const EDIT_TODO_ERROR = 'todos/EDIT_TODO_ERROR';
@@ -23,6 +24,8 @@ const defaultState = {
   queryString: {},
   addTodoStatus: '',
   addTodoError: [],
+  editTodoStatus: '',
+  editTodoError: [],
 };
 
 const todos = handleActions(
@@ -70,20 +73,18 @@ const todos = handleActions(
         isLoading: false,
       };
     },
-    [EDIT_TODO_REQUEST]: (state, action) => {
-      const { id } = action.data;
-      const nextTodoList = state.todoList.map(todo => {
-        if (todo.id === id) {
-          return {
-            ...todo,
-            ...action.data,
-          };
-        }
-        return todo;
-      });
+    [EDIT_TODO_INIT]: state => {
       return {
         ...state,
-        todoList: nextTodoList,
+        editTodoStatus: '',
+        editTodoError: [],
+      };
+    },
+
+    [EDIT_TODO_REQUEST]: (state, action) => {
+      return {
+        ...state,
+        editTodoStatus: 'request',
         isLoading: true,
       };
     },
@@ -101,13 +102,15 @@ const todos = handleActions(
 
       return {
         ...state,
+        editTodoStatus: 'success',
         todoList: nextTodoList,
         isLoading: false,
       };
     },
-    [EDIT_TODO_ERROR]: state => {
+    [EDIT_TODO_ERROR]: (state, action) => {
       return {
         ...state,
+        editTodoError: action.error.response.data,
         isLoading: false,
       };
     },

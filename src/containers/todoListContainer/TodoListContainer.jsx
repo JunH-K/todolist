@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { attachPrefix, getMillisecondsToDate } from '../../util/util';
 import EditContainer from '../editContainer/EditContainer';
-import { EDIT_TODO_REQUEST } from '../../reducers/todos';
+import { EDIT_TODO_INIT, EDIT_TODO_REQUEST } from '../../reducers/todos';
 import { showToast } from '../../components';
 
 const CheckBox = styled.input.attrs({
@@ -66,13 +66,13 @@ const TodoListContainer = ({ todoList = [] }) => {
     const [todo] = todoList.filter(todo => {
       return todo.id === id;
     });
-    const { refId = [] } = todo;
+    const { refTodo = [] } = todo;
 
-    const refTodo = todoList.filter(todo => {
-      return refId.includes(todo.id.toString());
+    const refTodoFilter = todoList.filter(todo => {
+      return refTodo.includes(todo.id.toString());
     });
 
-    return refTodo.reduce(
+    return refTodoFilter.reduce(
       (preValue, curValue) => {
         if (curValue.done) {
           return {
@@ -111,6 +111,7 @@ const TodoListContainer = ({ todoList = [] }) => {
   };
 
   const onClickEdit = id => () => {
+    dispatch({ type: EDIT_TODO_INIT });
     setEditId(id);
   };
 
@@ -123,7 +124,7 @@ const TodoListContainer = ({ todoList = [] }) => {
       return (
         <EditContainer
           todoValue={todo.content}
-          refValue={todo.refId}
+          refValue={todo.refTodo}
           id={todo.id}
           key={todo.id + todo.createdAt}
           onClickCancel={onClickCancel}
@@ -149,7 +150,9 @@ const TodoListContainer = ({ todoList = [] }) => {
           {todo.content}
         </p>
         <div className="ref-id">
-          <p>{Array.isArray(todo.refId) && attachPrefix(todo.refId, '@')}</p>
+          <p>
+            {Array.isArray(todo.refTodo) && attachPrefix(todo.refTodo, '@')}
+          </p>
         </div>
         <div className="date">
           <span className="create-date">

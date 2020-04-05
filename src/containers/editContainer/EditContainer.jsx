@@ -1,9 +1,13 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
-import { Button, TodoForm } from '../../components';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button, showToast, TodoForm } from '../../components';
 import { attachPrefix, extractFromString } from '../../util/util';
-import { DELETE_TODO_REQUEST, EDIT_TODO_REQUEST } from '../../reducers/todos';
+import {
+  DELETE_TODO_REQUEST,
+  EDIT_TODO_REQUEST,
+  TODO_LIST_REQUEST,
+} from '../../reducers/todos';
 
 const EditContainer = ({
   id,
@@ -14,6 +18,21 @@ const EditContainer = ({
   const dispatch = useDispatch();
   const [todoValue, setTodoText] = useState(preTodoValue);
   const [refValue, setTodoRefId] = useState(attachPrefix(preRefValue, '@'));
+  const { editTodoStatus, editTodoError } = useSelector(state => state.todos);
+
+  useEffect(() => {
+    if (editTodoStatus === 'success') {
+      showToast('수정 완료!');
+      dispatch({ type: TODO_LIST_REQUEST, data: { page: 1 } });
+    }
+  }, [editTodoStatus]);
+
+  useEffect(() => {
+    const { refTodo = [] } = editTodoError;
+    if (refTodo.length) {
+      showToast(`${attachPrefix(refTodo, '@')} 존재하지 않는 Todo 입니다`);
+    }
+  }, [editTodoError]);
 
   const onChangeTodo = useCallback(e => {
     setTodoText(e.target.value);
@@ -29,7 +48,7 @@ const EditContainer = ({
       data: {
         id,
         content: todoValue,
-        refId: extractFromString(refValue, '@'),
+        refTodo: extractFromString(refValue, '@'),
       },
     });
   }, [todoValue, refValue]);
