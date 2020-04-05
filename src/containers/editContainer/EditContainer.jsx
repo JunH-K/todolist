@@ -88,7 +88,7 @@ const EditContainer = ({
 };
 
 EditContainer.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   todoValue: PropTypes.string.isRequired,
   refValue: PropTypes.string.isRequired,
   onClickCancel: PropTypes.func.isRequired,
