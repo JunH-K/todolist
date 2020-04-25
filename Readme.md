@@ -1,5 +1,7 @@
 # TodoList
 
+[![HitCount](http://hits.dwyl.com/JunH-K/todolist.svg)](http://hits.dwyl.com/JunH-K/todolist)
+
 > 기술스택
 
 
