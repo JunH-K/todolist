@@ -1,6 +1,6 @@
 # TodoList
 
-[![HitCount](http://hits.dwyl.com/JunH-K/todolist.svg)](http://hits.dwyl.com/JunH-K/todolist)
+[![Hits](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FJunH-K%2Ftodolist)](https://hits.seeyoufarm.com)
 
 > 기술스택
 
